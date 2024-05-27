@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Mahasiswa;
 
 use App\Models\Mahasiswa;
 use App\Contracts\Response;
@@ -8,13 +8,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Mahasiswa\RegisterRequest;
 use App\Http\Resources\MahasiswaResource;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\RegisterRequest;
 
 class AuthController extends Controller
 {
-
     public function register(RegisterRequest $request)
     {
         $data = $request->all();
@@ -22,13 +21,14 @@ class AuthController extends Controller
         $data['password'] = bcrypt($request->password);
 
         $mahasiswa = Mahasiswa::create($data);
+        $mahasiswa->assignRole(['mahasiswa']);
 
         $token = $mahasiswa->createToken('API Token')->accessToken;
         Log::info('REGISTER USER', ['data' => $mahasiswa]);
         return Response::json(
             [
                 'message' => 'Registration Successful',
-                'user' => new MahasiswaResource($mahasiswa),
+                'user' => $mahasiswa,
                 'token' => $token
             ],
             Response::MESSAGE_OK,

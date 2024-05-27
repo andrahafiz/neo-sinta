@@ -40,8 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'api' => [
+        'mahasiswa-api' => [
             'driver' => 'passport',
+            'provider' => 'mahasiswa',
+        ],
+        'api' => [
+            'driver' => 'token',
             'provider' => 'users',
             'hash' => false,
         ]
@@ -69,7 +73,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
+        'mahasiswa' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Mahasiswa::class,
+        ]
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
