@@ -53,6 +53,7 @@ class TitleSubmission extends Model
 		'mahasiswas_id',
 		'pembimbing_1',
 		'pembimbing_2',
+		'dok_pengajuan_judul',
 		'konsentrasi_ilmu'
 	];
 

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('mahasiswas_id');
             $table->foreignId('pembimbing_1');
             $table->foreignId('pembimbing_2');
+            $table->string('dok_pengajuan_judul');
             $table->string('konsentrasi_ilmu');
             
 
