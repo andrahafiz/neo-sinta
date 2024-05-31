@@ -39,7 +39,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         config(['auth.guards.mahasiswa-api.driver' => 'session']);
-        if (Auth::guard('mahasiswa-api')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+        if (Auth::guard('mahasiswa-api')->attempt(['nim' => $request->nim, 'password' => $request->password], $request->get('remember'))) {
             //generate the token for the user
             $token = auth()->guard('mahasiswa-api')->user()
                 ->createToken('authToken')->accessToken;

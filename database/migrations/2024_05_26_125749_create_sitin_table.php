@@ -24,12 +24,19 @@ return new class extends Migration
             $table->string('check_out_document')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->foreignId('mahasiswas_id');
+            $table->foreignId('approval_by');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('mahasiswas_id')
                 ->references('id')
                 ->on('mahasiswas')
+                ->restrictOnUpdate()
+                ->restrictOnDelete();
+
+            $table->foreign('approval_by')
+                ->references('id')
+                ->on('lecture')
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
         });

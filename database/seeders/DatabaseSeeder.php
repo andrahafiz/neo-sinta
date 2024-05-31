@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
 
         $mahasiswa = Mahasiswa::create([
             'name'              => 'mahasiswa',
+            'nim'               => '12345',
             'email'             => 'mahasiswa@gmail.com',
             'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
@@ -44,11 +45,16 @@ class DatabaseSeeder extends Seeder
         \App\Models\Product::factory(count: 1)->create();
 
         $role_mahasiswa = Role::create(['name' => 'mahasiswa', 'guard_name' => 'mahasiswa-api']);
-        $role_dosen = Role::create(['name' => 'dosen', 'guard_name' => 'mahasiswa-api']);
 
         $mahasiswa->assignRole(['mahasiswa']);
 
-        // $mahasiswa->assignRole(['mahasiswa']);
-        // \App\Models\Feedback::factory(count: 1)->create();
+        // $dosen = Lecture::create([
+        //     'name'              => 'dosen',
+        //     'email'             => 'dosen@gmail.com',
+        //     'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        // ]);
+
+        $role_dosen     = Role::create(['name' => 'dosen', 'guard_name' => 'dosen-api']);
+        $role_kaprodi   = Role::create(['name' => 'kaprodi', 'guard_name' => 'kaprodi-api']);
     }
 }
