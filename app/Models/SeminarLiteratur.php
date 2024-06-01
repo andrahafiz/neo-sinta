@@ -33,12 +33,12 @@ class SeminarLiteratur extends Model
 	];
 
 	protected $fillable = [
-		'status'
-		'date'
-		'pic'
-		'check_in_ppt'
-		'check_in_literatur'
-		'mahasiswas_id'
+		'status',
+		'date',
+		'pic',
+		'check_in_ppt',
+		'check_in_literatur',
+		'mahasiswas_id',
 		'approval_by'
 	];
 
