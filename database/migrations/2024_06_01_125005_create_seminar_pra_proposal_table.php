@@ -15,11 +15,15 @@ return new class extends Migration
     {
         Schema::create('seminar_pra_proposal', function (Blueprint $table) {
             $table->id();
+
             $table->timestamp('date');
+            $table->string('title');
             $table->tinyInteger('status')->nullable();
-            $table->string('pembahasan')();
-            $table->string('saran')->nullable();
-            $table->string('catatan')->nullable();
+            $table->foreignId('pic');
+            $table->timestamp('proposed_at')->nullable();
+            $table->timestamp('in_review_at')->nullable();
+            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('declined_at')->nullable();
             $table->string('draf_pra_pro');
             $table->string('pra_pro_ppt');
             $table->string('dok_persetujuan_pra_pro');

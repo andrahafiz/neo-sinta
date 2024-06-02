@@ -14,13 +14,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class SeminarHasil
  * 
  * @property int $id
- * @property Carbon $date
- * @property int|null $status
- * @property string $pembahasan
- * @property string|null $catatan
  * @property string $title
+ * @property int|null $status
  * @property int|null $pic
- * @property string|null $saran
  * @property string $dok_persetujuan_sem_hasil
  * @property string $draf_tesis
  * @property string $tesis_ppt
@@ -29,6 +25,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $plagiarisme
  * @property int $mahasiswas_id
  * @property int $approval_by
+ * @property Carbon|null $proposed_at
+ * @property Carbon|null $in_review_at
+ * @property Carbon|null $approved_at
+ * @property Carbon|null $declined_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
@@ -44,21 +44,20 @@ class SeminarHasil extends Model
 	protected $table = 'seminar_hasil';
 
 	protected $casts = [
-		'date' => 'datetime',
 		'status' => 'int',
 		'pic' => 'int',
 		'mahasiswas_id' => 'int',
-		'approval_by' => 'int'
+		'approval_by' => 'int',
+		'proposed_at' => 'datetime',
+		'in_review_at' => 'datetime',
+		'approved_at' => 'datetime',
+		'declined_at' => 'datetime'
 	];
 
 	protected $fillable = [
-		'date',
-		'status',
-		'pembahasan',
-		'catatan',
 		'title',
+		'status',
 		'pic',
-		'saran',
 		'dok_persetujuan_sem_hasil',
 		'draf_tesis',
 		'tesis_ppt',
@@ -66,7 +65,11 @@ class SeminarHasil extends Model
 		'toefl',
 		'plagiarisme',
 		'mahasiswas_id',
-		'approval_by'
+		'approval_by',
+		'proposed_at',
+		'in_review_at',
+		'approved_at',
+		'declined_at'
 	];
 
 	public function lecture()

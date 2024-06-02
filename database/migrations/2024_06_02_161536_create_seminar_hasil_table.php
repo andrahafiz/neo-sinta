@@ -15,13 +15,9 @@ return new class extends Migration
     {
         Schema::create('seminar_hasil', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('date');
-            $table->tinyInteger('status')->nullable();
-            $table->string('pembahasan');
-            $table->string('catatan')->nullable();
             $table->string('title');
+            $table->tinyInteger('status')->nullable();
             $table->foreignId('pic')->nullable();
-            $table->string('saran')->nullable();
             $table->string('dok_persetujuan_sem_hasil');
             $table->string('draf_tesis');
             $table->string('tesis_ppt');
@@ -30,6 +26,10 @@ return new class extends Migration
             $table->string('plagiarisme');
             $table->foreignId('mahasiswas_id');
             $table->foreignId('approval_by');
+            $table->timestamp('proposed_at')->nullable();
+            $table->timestamp('in_review_at')->nullable();
+            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('declined_at')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

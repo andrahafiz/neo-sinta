@@ -14,18 +14,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class SeminarProposal
  * 
  * @property int $id
- * @property Carbon $date
- * @property int|null $status
- * @property string $pembahasan
- * @property string|null $catatan
  * @property string $title
+ * @property int|null $status
+ * @property Carbon $date
  * @property int $pic
- * @property string|null $saran
  * @property string $draf_pro
  * @property string $pro_ppt
  * @property string $dok_persetujuan_pro
  * @property int $mahasiswas_id
  * @property int $approval_by
+ * @property Carbon|null $proposed_at
+ * @property Carbon|null $in_review_at
+ * @property Carbon|null $approved_at
+ * @property Carbon|null $declined_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
@@ -41,26 +42,31 @@ class SeminarProposal extends Model
 	protected $table = 'seminar_proposal';
 
 	protected $casts = [
-		'date' => 'datetime',
 		'status' => 'int',
+		'date' => 'datetime',
 		'pic' => 'int',
 		'mahasiswas_id' => 'int',
-		'approval_by' => 'int'
+		'approval_by' => 'int',
+		'proposed_at' => 'datetime',
+		'in_review_at' => 'datetime',
+		'approved_at' => 'datetime',
+		'declined_at' => 'datetime'
 	];
 
 	protected $fillable = [
-		'date',
-		'status',
-		'pembahasan',
-		'catatan',
 		'title',
+		'status',
+		'date',
 		'pic',
-		'saran',
 		'draf_pro',
 		'pro_ppt',
 		'dok_persetujuan_pro',
 		'mahasiswas_id',
-		'approval_by'
+		'approval_by',
+		'proposed_at',
+		'in_review_at',
+		'approved_at',
+		'declined_at'
 	];
 
 	public function lecture()

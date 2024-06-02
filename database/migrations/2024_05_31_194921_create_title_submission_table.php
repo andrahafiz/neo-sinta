@@ -17,11 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->tinyInteger('status')->nullable();
-            $table->timestamp('date');
-            $table->foreignId('pic');
+            $table->foreignId('pic')->nullable();
             $table->foreignId('mahasiswas_id');
-            $table->foreignId('pembimbing_1');
-            $table->foreignId('pembimbing_2');
+            $table->timestamp('proposed_at')->nullable();
+            $table->timestamp('in_review_at')->nullable();
+            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('declined_at')->nullable();
             $table->string('dok_pengajuan_judul');
             $table->string('konsentrasi_ilmu');
             
@@ -41,17 +42,7 @@ return new class extends Migration
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-            $table->foreign('pembimbing_1')
-            ->references('id')
-            ->on('lecture')
-            ->restrictOnUpdate()
-            ->restrictOnDelete();
-
-            $table->foreign('pembimbing_2')
-            ->references('id')
-            ->on('lecture')
-            ->restrictOnUpdate()
-            ->restrictOnDelete();
+         
         });
     }
 

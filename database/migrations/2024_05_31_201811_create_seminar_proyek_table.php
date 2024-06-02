@@ -15,16 +15,16 @@ return new class extends Migration
     {
         Schema::create('seminar_proyek', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('date');
-            $table->tinyInteger('status')->nullable();
-            $table->string('pembahasan')();
-            $table->string('catatan')->nullable();
             $table->string('title');
+            $table->tinyInteger('status')->nullable();
+            $table->timestamp('date');
             $table->foreignId('pic');
-            $table->string('saran')->nullable();
-            $table->string('Dok_Per_Sem_Proyek');
+            $table->string('dok_per_sem_proyek');
             $table->foreignId('mahasiswas_id');
-
+            $table->timestamp('proposed_at')->nullable();
+            $table->timestamp('in_review_at')->nullable();
+            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('declined_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
