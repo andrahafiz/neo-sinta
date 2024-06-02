@@ -71,6 +71,10 @@ class SeminarProposal extends Model
 
 	public function lecture()
 	{
+		return $this->belongsTo(Lecture::class, 'pic');
+	}
+	public function approveBy()
+	{
 		return $this->belongsTo(Lecture::class, 'approval_by');
 	}
 
