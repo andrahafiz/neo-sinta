@@ -38,14 +38,14 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        config(['auth.guards.mahasiswa-api.driver' => 'session']);
-        if (Auth::guard('mahasiswa-api')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+        config(['auth.guards.mahasiswa-guard.driver' => 'session']);
+        if (Auth::guard('mahasiswa-guard')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
             //generate the token for the user
-            $token = auth()->guard('mahasiswa-api')->user()
+            $token = auth()->guard('mahasiswa-guard')->user()
                 ->createToken('authToken')->accessToken;
 
             return Response::json([
-                'user' => auth()->guard('mahasiswa-api')->user(),
+                'user' => auth()->guard('mahasiswa-guard')->user(),
                 'token' => $token
             ]);
         } else {
@@ -62,7 +62,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Log::info('LOGOUT USER', ['data' => auth()->guard('mahasiswa-api')->user(), 'logoutAt' => now()]);
+        Log::info('LOGOUT USER', ['data' => auth()->guard('mahasiswa-guard')->user(), 'logoutAt' => now()]);
         $token = $request->user()->token();
         $token->revoke();
 

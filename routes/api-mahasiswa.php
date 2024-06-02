@@ -27,7 +27,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/register', [MahasiswaAuthController::class, 'register']);
 Route::post('/login', [MahasiswaAuthController::class, 'login']);
 
-Route::middleware(['auth:mahasiswa-api', 'role:mahasiswa'])->group(function () {
+Route::middleware(['auth:mahasiswa-guard', 'role:mahasiswa'])->group(function () {
     Route::post('logout', [MahasiswaAuthController::class, 'logout']);
     Route::get('/me', MeController::class);
 

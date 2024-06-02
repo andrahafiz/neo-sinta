@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Mahasiswa;
 use App\Contracts\Response;
 use Illuminate\Http\Request;
 use App\Models\TitleSubmission;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TitleSubmissionCollection;
 use App\Repositories\Mahasiswa\TitleSubmissionRepository;
+use App\Http\Requests\Mahasiswa\TitleSubmissionStoreRequest;
+use App\Http\Resources\TitleSubmissionResource;
 
 class PengajuanJudulController extends Controller
 {
@@ -41,21 +44,31 @@ class PengajuanJudulController extends Controller
      */
     public function index(Request $request)
     {
-        $sitInes = $this->titleSubmissionModel->with('mahasiswa')
+        $submission = $this->titleSubmissionModel->with('mahasiswa')
             ->orderByDesc('created_at')->paginate($request->query('show'));
 
-        return Response::json(new TitleSubmissionCollection($sitInes));
+        return Response::json(new TitleSubmissionCollection($submission));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Mahasiswa\TitleSubmissionStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TitleSubmissionStoreRequest $request)
     {
-        //
+        $submission = DB::transaction(function () use ($request) {
+            $submission = $this->titleSubmissionRepository
+                ->store($request);
+            return $submission;
+        });
+
+        return Response::json(
+            new TitleSubmissionResource($submission),
+            Response::MESSAGE_CREATED,
+            Response::STATUS_CREATED
+        );
     }
 
     /**
