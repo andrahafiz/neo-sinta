@@ -40,7 +40,7 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'mahasiswa-api' => [
+        'mahasiswa-guard' => [
             'driver' => 'passport',
             'provider' => 'mahasiswa',
         ],

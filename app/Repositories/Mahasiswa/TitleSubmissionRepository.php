@@ -20,6 +20,7 @@ use App\Repositories\Interface\TitleSubmissionInterface;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Mahasiswa\TitleSubmissionRequest;
 use App\Http\Requests\Mahasiswa\TitleSubmissionCheckOutRequest;
+use App\Http\Requests\Mahasiswa\TitleSubmissionStoreRequest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class TitleSubmissionRepository
@@ -28,7 +29,7 @@ class TitleSubmissionRepository
     /**
      * @var \App\Models\TitleSubmission
      */
-    protected $sitInModel;
+    protected $titleSubmission;
 
     /**
      * @var \App\Models\Log
@@ -36,15 +37,43 @@ class TitleSubmissionRepository
     protected $logModel;
 
     /**
-     * @param  \App\Models\TitleSubmission  $sitInModel
+     * @param  \App\Models\TitleSubmission  $titleSubmission
      */
     public function __construct(
-        TitleSubmission $sitInModel,
+        TitleSubmission $titleSubmission,
     ) {
-        $this->sitInModel = $sitInModel;
+        $this->titleSubmission = $titleSubmission;
     }
 
+    /**
+     * @param  \App\Http\Requests\TitleSubmissionStoreRequest  $request
+     * @return \App\Models\TitleSubmission
+     */
+    public function store(TitleSubmissionStoreRequest $request)
+    {
+        $input = $request->safe([
+            'title', 'dok_pengajuan_judul', 'konsentrasi_ilmu'
+        ]);
 
+        $photo = $request->file('dok_pengajuan_judul');
+        if ($photo instanceof UploadedFile) {
+            $rawPath = $photo->store('public/dokumen/pengajuan_judul');
+            $path = str_replace('public/', '', $rawPath);
+        }
+
+        $mahasiswa = auth()->guard('mahasiswa-guard')->user()->id;
+        $submission = $this->titleSubmission->create([
+            'title'         => $input['title'],
+            'status'        => $this->titleSubmission::STATUS_PROPOSED,
+            'proposed_at'   => now(),
+            'mahasiswas_id' => $mahasiswa,
+            'konsentrasi_ilmu'      => $input['konsentrasi_ilmu'],
+            'dok_pengajuan_judul'   => $path ?? null,
+        ]);
+
+        Logging::log("CREATE PRODUCT", $submission);
+        return $submission;
+    }
     // /**
     //  * @param  \App\Http\Requests\TitleSubmissionUpdateRequest  $request
     //  * @param  \App\Models\TitleSubmission  $checkin
