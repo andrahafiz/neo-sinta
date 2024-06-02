@@ -15,6 +15,16 @@ class SitInResource extends JsonResource
      */
     public function toArray($request)
     {
+        $mahasiswa = $this->mahasiswa ? [
+            'id' => $this->mahasiswa?->id,
+            'name' => $this->mahasiswa?->name,
+        ] : null;
+
+        $approvalBy = $this->lecture ? [
+            'id' => $this->lecture?->id,
+            'name' => $this->lecture?->name,
+        ] : null;
+
         return [
             'id'         => $this->id,
             'date'       => $this->date?->format('c'),
@@ -22,13 +32,11 @@ class SitInResource extends JsonResource
             'checkOut'   => $this->check_out?->format('H:i'),
             'duration'   => $this->duration ?? 0,
             'checkInProof'      => $this->check_in_proof ? url('/') . '/storage/' . $this->check_in_proof : null,
-            'checkOutProof'     => $this->check_out_proof,
-            'checkOutDocument'  => $this->check_out_document,
+            'checkOutProof'     => $this->check_out_proof ? url('/') . '/storage/' . $this->check_out_proof : null,
+            'checkOutDocument'  => $this->check_out_document ? url('/') . '/storage/' . $this->check_out_document : null,
             'status'            => $this->status,
-            'mahasiswa'         => [
-                'id' => $this->mahasiswa?->id,
-                'name' => $this->mahasiswa?->name,
-            ],
+            'mahasiswa'         => $mahasiswa,
+            'approvalBy'        => $approvalBy,
             'createdAt'   => $this->created_at?->format('c'),
             'updatedAt'   => $this->updated_at?->format('c'),
         ];

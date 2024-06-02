@@ -11,8 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * Class TitleSubmission
+ *
  * Class SeminarProyek
- * 
+ *
  * @property int $id
  * @property string $title
  * @property int|null $status
@@ -27,7 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- * 
+ *
  * @property Mahasiswa $mahasiswa
  * @property Lecture $lecture
  *
@@ -35,40 +37,40 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class SeminarProyek extends Model
 {
-	use SoftDeletes;
-	protected $table = 'seminar_proyek';
+    use SoftDeletes;
+    protected $table = 'seminar_proyek';
 
-	protected $casts = [
-		'status' => 'int',
-		'date' => 'datetime',
-		'pic' => 'int',
-		'mahasiswas_id' => 'int',
-		'proposed_at' => 'datetime',
-		'in_review_at' => 'datetime',
-		'approved_at' => 'datetime',
-		'declined_at' => 'datetime'
-	];
+    protected $casts = [
+        'status' => 'int',
+        'date' => 'datetime',
+        'pic' => 'int',
+        'mahasiswas_id' => 'int',
+        'proposed_at' => 'datetime',
+        'in_review_at' => 'datetime',
+        'approved_at' => 'datetime',
+        'declined_at' => 'datetime'
+    ];
 
-	protected $fillable = [
-		'title',
-		'status',
-		'date',
-		'pic',
-		'dok_per_sem_proyek',
-		'mahasiswas_id',
-		'proposed_at',
-		'in_review_at',
-		'approved_at',
-		'declined_at'
-	];
+    protected $fillable = [
+        'title',
+        'status',
+        'date',
+        'pic',
+        'dok_per_sem_proyek',
+        'mahasiswas_id',
+        'proposed_at',
+        'in_review_at',
+        'approved_at',
+        'declined_at'
+    ];
 
-	public function mahasiswa()
-	{
-		return $this->belongsTo(Mahasiswa::class, 'mahasiswas_id');
-	}
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'mahasiswas_id');
+    }
 
-	public function lecture()
-	{
-		return $this->belongsTo(Lecture::class, 'pic');
-	}
+    public function lecture()
+    {
+        return $this->belongsTo(Lecture::class, 'pic');
+    }
 }

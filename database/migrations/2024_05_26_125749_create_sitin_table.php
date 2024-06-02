@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('check_out_document')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->foreignId('mahasiswas_id');
-            $table->foreignId('approval_by');
+            $table->foreignId('approval_by')->nullable();;
             $table->timestamps();
             $table->softDeletes();
 
