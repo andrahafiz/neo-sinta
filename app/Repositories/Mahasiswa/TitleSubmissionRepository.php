@@ -114,16 +114,14 @@ class TitleSubmissionRepository
         return $pengajuan_judul;
     }
 
-    // /**
-    //  * @param  \App\Contracts\Request  $request
-    //  * @param  \App\Models\TitleSubmission  $pengajuan_judul
-    //  * @return \App\Models\TitleSubmission
-    //  */
-    // public function delete(Request $request, TitleSubmission $pengajuan_judul)
-    // {
-    //     $pengajuan_judul->delete();
-
-
-    //     return $pengajuan_judul;
-    // }
+    /**
+     * @param  \App\Models\TitleSubmission  $pengajuan_judul
+     * @return \App\Models\TitleSubmission
+     */
+    public function delete(TitleSubmission $pengajuan_judul): bool
+    {
+        Logging::log("DELETE PRODUCT", $pengajuan_judul);
+        $pengajuan_judul = $pengajuan_judul->delete();
+        return $pengajuan_judul;
+    }
 }

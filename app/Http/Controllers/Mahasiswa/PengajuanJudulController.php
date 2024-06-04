@@ -118,8 +118,14 @@ class PengajuanJudulController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TitleSubmission $pengajuan_judul)
     {
-        //
+        $deleteTitleSubmission = DB::transaction(function () use ($pengajuan_judul) {
+            $deleteTitleSubmission = $this->titleSubmissionRepository
+                ->delete($pengajuan_judul);
+            return $deleteTitleSubmission;
+        });
+
+        return Response::noContent();
     }
 }
