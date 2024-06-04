@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\TitleSubmission;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TitleSubmissionResource;
 use App\Http\Resources\TitleSubmissionCollection;
 use App\Repositories\Mahasiswa\TitleSubmissionRepository;
 use App\Http\Requests\Mahasiswa\TitleSubmissionStoreRequest;
-use App\Http\Resources\TitleSubmissionResource;
+use App\Http\Requests\Mahasiswa\TitleSubmissionUpdateRequest;
 
 class PengajuanJudulController extends Controller
 {
@@ -77,9 +78,10 @@ class PengajuanJudulController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(TitleSubmission $pengajuan_judul)
     {
-        //
+        $pengajuan_judul->load(['mahasiswa', 'lecture']);
+        return Response::json(new TitleSubmissionResource($pengajuan_judul));
     }
 
     /**
@@ -96,13 +98,18 @@ class PengajuanJudulController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\Mahasiswa\TitleSubmissionUpdateRequest  $request
+     * @param  \App\Models\TitleSubmission $pengajuan_judul
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TitleSubmissionUpdateRequest $request, TitleSubmission $pengajuan_judul)
     {
-        //
+        $updatedTitleSubmission = DB::transaction(function () use ($request, $pengajuan_judul) {
+            $updatedTitleSubmission = $this->titleSubmissionRepository
+                ->update($request, $pengajuan_judul);
+            return $updatedTitleSubmission;
+        });
+        return Response::json(new TitleSubmissionResource($updatedTitleSubmission));
     }
 
     /**

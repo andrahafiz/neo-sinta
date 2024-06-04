@@ -2,26 +2,12 @@
 
 namespace App\Repositories\Mahasiswa;
 
-use Exception;
-use Carbon\Carbon;
-use App\Models\Log;
 use App\Models\TitleSubmission;
-use App\Models\Product;
 use App\Contracts\Logging;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Contracts\FormRequest;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\QueryException;
-use App\Http\Requests\TitleSubmissionCreateRequest;
-use App\Http\Requests\TitleSubmissionUpdateRequest;
-use App\Repositories\Interface\TitleSubmissionInterface;
-use Illuminate\Validation\ValidationException;
-use App\Http\Requests\Mahasiswa\TitleSubmissionRequest;
-use App\Http\Requests\Mahasiswa\TitleSubmissionCheckOutRequest;
+use Illuminate\Support\Facades\File;
+use App\Http\Requests\Mahasiswa\TitleSubmissionUpdateRequest;
 use App\Http\Requests\Mahasiswa\TitleSubmissionStoreRequest;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class TitleSubmissionRepository
 {
@@ -55,9 +41,9 @@ class TitleSubmissionRepository
             'title', 'dok_pengajuan_judul', 'konsentrasi_ilmu'
         ]);
 
-        $photo = $request->file('dok_pengajuan_judul');
-        if ($photo instanceof UploadedFile) {
-            $rawPath = $photo->store('public/dokumen/pengajuan_judul');
+        $document = $request->file('dok_pengajuan_judul');
+        if ($document instanceof UploadedFile) {
+            $rawPath = $document->store('public/dokumen/pengajuan_judul');
             $path = str_replace('public/', '', $rawPath);
         }
 
@@ -74,38 +60,70 @@ class TitleSubmissionRepository
         Logging::log("CREATE PRODUCT", $submission);
         return $submission;
     }
-    // /**
-    //  * @param  \App\Http\Requests\TitleSubmissionUpdateRequest  $request
-    //  * @param  \App\Models\TitleSubmission  $checkin
-    //  * @return \App\Models\TitleSubmission
-    //  * @throws \Illuminate\Validation\ValidationException
-    //  */
-    // public function update(TitleSubmissionUpdateRequest $request, TitleSubmission $checkin)
-    // {
-    //     $input = $request->safe([
-    //         'name',
-    //         'cycleTime',
-    //     ]);
 
-    //     $checkin->update([
-    //         'name'          => $input['name'] ?? $checkin->name,
-    //         'cycle_time'    => $input['cycleTime'] ?? $checkin->cycle_time,
-    //     ]);
+    /**
+     * @param  \App\Http\Requests\TitleSubmissionUpdateRequest  $request
+     * @param  \App\Models\TitleSubmission  $pengajuan_judul
+     * @return \App\Models\TitleSubmission
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(TitleSubmissionUpdateRequest $request, TitleSubmission $pengajuan_judul)
+    {
+        $input = $request->safe([
+            'title',
+            'status',
+            'pic',
+            'mahasiswas_id',
+            'proposed_at',
+            'in_review_at',
+            'approved_at',
+            'declined_at',
+            'dok_pengajuan_judul',
+            'konsentrasi_ilmu'
+        ]);
+        $document = $request->file('dok_pengajuan_judul');
+        if ($document instanceof UploadedFile) {
+            $rawPath = $document->store('public/dokumen/pengajuan_judul');
+            $path = str_replace('public/', '', $rawPath);
+        }
 
+        $document = $request->file('dok_pengajuan_judul');
+        if ($document instanceof UploadedFile) {
+            $file_path = storage_path() . '/app/' . $pengajuan_judul->dok_pengajuan_judul;
+            if (File::exists($file_path)) {
+                unlink($file_path);
+            }
+            $filename = $document->store('public/dokumen/pengajuan_judul');
+        } else {
+            $filename = $pengajuan_judul->dok_pengajuan_judul;
+        };
+        $pengajuan_judul->update([
+            'title'         => $input['title'] ?? $pengajuan_judul->title,
+            'status'        =>  $input['status'] ?? $pengajuan_judul->status,
+            'mahasiswas_id' => $input['mahasiswas_id'] ?? $pengajuan_judul->mahasiswas_id,
+            'pic'           => $input['pic'] ?? $pengajuan_judul->pic,
+            'proposed_at'   => $input['proposed_at'] ?? $pengajuan_judul->proposed_at,
+            'in_review_at'  => $input['in_review_at'] ?? $pengajuan_judul->in_review_at,
+            'approved_at'   => $input['approved_at'] ?? $pengajuan_judul->approved_at,
+            'declined_at'   => $input['declined_at'] ?? $pengajuan_judul->declined_at,
+            'konsentrasi_ilmu'      => $input['konsentrasi_ilmu'] ?? $pengajuan_judul->konsentrasi_ilmu,
+            'dok_pengajuan_judul'   =>  $filename
+        ]);
 
-    //     return $checkin;
-    // }
+        Logging::log("EDIT PRODUCT", $pengajuan_judul);
+        return $pengajuan_judul;
+    }
 
     // /**
     //  * @param  \App\Contracts\Request  $request
-    //  * @param  \App\Models\TitleSubmission  $checkin
+    //  * @param  \App\Models\TitleSubmission  $pengajuan_judul
     //  * @return \App\Models\TitleSubmission
     //  */
-    // public function delete(Request $request, TitleSubmission $checkin)
+    // public function delete(Request $request, TitleSubmission $pengajuan_judul)
     // {
-    //     $checkin->delete();
+    //     $pengajuan_judul->delete();
 
 
-    //     return $checkin;
+    //     return $pengajuan_judul;
     // }
 }
