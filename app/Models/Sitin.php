@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Sitin
- * 
+ *
  * @property int $id
  * @property Carbon $date
  * @property Carbon|null $check_in
@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- * 
+ *
  * @property Lecture $lecture
  * @property Mahasiswa $mahasiswa
  *
@@ -35,39 +35,67 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Sitin extends Model
 {
-	use SoftDeletes;
-	protected $table = 'sitin';
+    use SoftDeletes;
+    protected $table = 'sitin';
 
-	protected $casts = [
-		'date' => 'datetime',
-		'check_in' => 'datetime',
-		'check_out' => 'datetime',
-		'duration' => 'int',
-		'status' => 'int',
-		'mahasiswas_id' => 'int',
-		'approval_by' => 'int'
-	];
+    public const STATUS_IN_PROGRESS = 0;
+    public const STATUS_CONFIRM = 1;
+    public const STATUS_APPROVE = 2;
+    public const STATUS_DECLINE = 3;
 
-	protected $fillable = [
-		'date',
-		'check_in',
-		'check_out',
-		'duration',
-		'check_in_proof',
-		'check_out_proof',
-		'check_out_document',
-		'status',
-		'mahasiswas_id',
-		'approval_by'
-	];
+    protected $casts = [
+        'date' => 'datetime',
+        'check_in' => 'datetime',
+        'check_out' => 'datetime',
+        'duration' => 'int',
+        'status' => 'int',
+        'mahasiswas_id' => 'int',
+        'approval_by' => 'int'
+    ];
 
-	public function lecture()
-	{
-		return $this->belongsTo(Lecture::class, 'approval_by');
-	}
+    protected $fillable = [
+        'date',
+        'check_in',
+        'check_out',
+        'duration',
+        'check_in_proof',
+        'check_out_proof',
+        'check_out_document',
+        'status',
+        'mahasiswas_id',
+        'approval_by'
+    ];
 
-	public function mahasiswa()
-	{
-		return $this->belongsTo(Mahasiswa::class, 'mahasiswas_id');
-	}
+    public function getStatusTextAttribute()
+    {
+        $status = $this->status;
+        switch ($this->status) {
+            case 0:
+                $status = 'Progress';
+                break;
+            case 1:
+                $status = 'Konfirmasi';
+                break;
+            case 2:
+                $status = 'Approve';
+                break;
+            case 3:
+                $status = 'Tolak';
+                break;
+            default:
+                $status;
+                break;
+        }
+        return $status;
+    }
+
+    public function lecture()
+    {
+        return $this->belongsTo(Lecture::class, 'approval_by');
+    }
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'mahasiswas_id');
+    }
 }

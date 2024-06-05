@@ -35,6 +35,7 @@ class SitInResource extends JsonResource
             'checkOutProof'     => $this->check_out_proof ? url('/') . '/storage/' . $this->check_out_proof : null,
             'checkOutDocument'  => $this->check_out_document ? url('/') . '/storage/' . $this->check_out_document : null,
             'status'            => $this->status,
+            'statusText'        => $this->status_text,
             'mahasiswa'         => $mahasiswa,
             'approvalBy'        => $approvalBy,
             'createdAt'   => $this->created_at?->format('c'),

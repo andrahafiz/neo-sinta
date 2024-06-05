@@ -3,10 +3,10 @@
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Mahasiswa\UserController;
-use App\Http\Controllers\Mahasiswa\AuthController as MahasiswaAuthController;
-use App\Http\Controllers\Mahasiswa\MeController;
-use App\Http\Controllers\Mahasiswa\SitInController;
+use App\Http\Controllers\Dosen\UserController;
+use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
+use App\Http\Controllers\Dosen\MeController;
+use App\Http\Controllers\Dosen\SitInController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,14 +23,13 @@ Route::get('/user', function (Request $request) {
     $category = Category::all();
 });
 
-Route::post('/register', [MahasiswaAuthController::class, 'register']);
-Route::post('/login', [MahasiswaAuthController::class, 'login']);
+Route::post('/register', [DosenAuthController::class, 'register']);
+Route::post('/login', [DosenAuthController::class, 'login']);
 
-Route::middleware(['auth:dosen-api', 'role:dosen'])->group(function () {
-    Route::post('logout', [MahasiswaAuthController::class, 'logout']);
+Route::middleware(['auth:dosen-guard', 'role:dosen|kaprodi'])->group(function () {
+    Route::post('logout', [DosenAuthController::class, 'logout']);
     Route::get('/me', MeController::class);
 
-    Route::post('sitin/checkin', [SitInController::class, 'checkIn']);
-    Route::post('sitin/checkout/{sitIn}', [SitInController::class, 'checkOut']);
+    Route::put('sitin/{sitIn}/confirm', [SitInController::class, 'confirm']);
     Route::apiResource('sitin', SitInController::class);
 });

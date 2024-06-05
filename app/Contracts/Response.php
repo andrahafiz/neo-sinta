@@ -19,6 +19,7 @@ abstract class Response
      */
     public const MESSAGE_OK = 'OK_SUCCESS';
     public const MESSAGE_CREATED = 'CREATED';
+    public const MESSAGE_UPDATED = 'UPDATED';
     public const MESSAGE_NO_CONTENT = 'NO_CONTENT';
     public const MESSAGE_UNAUTHORIZED = 'UNAUTHORIZED';
     public const MESSAGE_NOT_FOUND = 'NOT_FOUND';
@@ -77,6 +78,11 @@ abstract class Response
         }
 
         return response()->json($content, $status);
+    }
+
+    public static function okUpdated($data = null): JsonResponse
+    {
+        return self::json($data, self::MESSAGE_UPDATED, self::STATUS_OK);
     }
 
     /**

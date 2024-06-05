@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Lecture;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Mahasiswa;
@@ -48,13 +49,24 @@ class DatabaseSeeder extends Seeder
 
         $mahasiswa->assignRole(['mahasiswa']);
 
-        // $dosen = Lecture::create([
-        //     'name'              => 'dosen',
-        //     'email'             => 'dosen@gmail.com',
-        //     'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        // ]);
+        $dosen = Lecture::create([
+            'name'              => 'dosen',
+            'nip'               => '54321',
+            'email'             => 'dosen@gmail.com',
+            'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
 
-        $role_dosen     = Role::create(['name' => 'dosen', 'guard_name' => 'dosen-api']);
-        $role_kaprodi   = Role::create(['name' => 'kaprodi', 'guard_name' => 'kaprodi-api']);
+        $kaprodi = Lecture::create([
+            'name'              => 'kaprodi',
+            'nip'               => '99999',
+            'email'             => 'kaprod@gmail.com',
+            'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+
+        $role_dosen     = Role::create(['name' => 'dosen', 'guard_name' => 'dosen-guard']);
+        $role_kaprodi   = Role::create(['name' => 'kaprodi', 'guard_name' => 'dosen-guard']);
+
+        $dosen->assignRole(['dosen']);
+        $kaprodi->assignRole(['dosen', 'kaprodi']);
     }
 }

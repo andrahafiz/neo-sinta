@@ -44,6 +44,10 @@ return [
             'driver' => 'passport',
             'provider' => 'mahasiswa',
         ],
+        'dosen-guard' => [
+            'driver' => 'passport',
+            'provider' => 'dosen',
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -76,7 +80,11 @@ return [
         'mahasiswa' => [
             'driver' => 'eloquent',
             'model' => App\Models\Mahasiswa::class,
-        ]
+        ],
+        'dosen' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Lecture::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
