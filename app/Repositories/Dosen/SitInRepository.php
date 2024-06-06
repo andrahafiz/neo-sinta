@@ -2,23 +2,11 @@
 
 namespace App\Repositories\Dosen;
 
-use Exception;
 use Carbon\Carbon;
-use App\Models\Log;
 use App\Models\SitIn;
-use App\Models\Product;
-use App\Contracts\Logging;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Contracts\FormRequest;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\QueryException;
-use App\Http\Requests\SitInCreateRequest;
-use App\Http\Requests\SitInUpdateRequest;
-use App\Repositories\Interface\SitInInterface;
+use App\Http\Requests\Dosen\SitInUpdateRequest;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SitInRepository
 {
@@ -55,44 +43,33 @@ class SitInRepository
         $status = $data['action'] == 'approve' ? SitIn::STATUS_APPROVE : Sitin::STATUS_DECLINE;
 
         $sitIn->update([
-            'status' => $status
+            'status' => $status,
+            'approval_by' => auth()->user()->id
         ]);
 
         return $sitIn;
     }
 
-    // /**
-    //  * @param  \App\Http\Requests\SitInUpdateRequest  $request
-    //  * @param  \App\Models\SitIn  $checkin
-    //  * @return \App\Models\SitIn
-    //  * @throws \Illuminate\Validation\ValidationException
-    //  */
-    // public function update(SitInUpdateRequest $request, SitIn $checkin)
-    // {
-    //     $input = $request->safe([
-    //         'name',
-    //         'cycleTime',
-    //     ]);
+    /**
+     * @param  \App\Http\Requests\SitInUpdateRequest  $request
+     * @param  \App\Models\SitIn  $checkin
+     * @return \App\Models\SitIn
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(SitInUpdateRequest $request, SitIn $sitIn)
+    {
+        $data = $request->all();
 
-    //     $checkin->update([
-    //         'name'          => $input['name'] ?? $checkin->name,
-    //         'cycle_time'    => $input['cycleTime'] ?? $checkin->cycle_time,
-    //     ]);
+        $checkIn = Carbon::parse($sitIn->check_in);
+        $checkOut = Carbon::parse($data['check_out']);
 
+        $data['duration'] = $checkOut->diffInMinutes($checkIn, true);
 
-    //     return $checkin;
-    // }
+        if (!$checkIn->lessThan($checkOut)) {
+            throw ValidationException::withMessages(['duration' => 'Waktu checkout harus lebih besar dibanding waktu checkin']);
+        }
 
-    // /**
-    //  * @param  \App\Contracts\Request  $request
-    //  * @param  \App\Models\SitIn  $checkin
-    //  * @return \App\Models\SitIn
-    //  */
-    // public function delete(Request $request, SitIn $checkin)
-    // {
-    //     $checkin->delete();
-
-
-    //     return $checkin;
-    // }
+        $sitIn->update($data);
+        return $sitIn;
+    }
 }

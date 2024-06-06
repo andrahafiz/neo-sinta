@@ -12,6 +12,7 @@ use App\Http\Resources\SitInCollection;
 use App\Repositories\Dosen\SitInRepository;
 use App\Http\Requests\Dosen\SitInCheckInRequest;
 use App\Http\Requests\Dosen\SitInCheckOutRequest;
+use App\Http\Requests\Dosen\SitInUpdateRequest;
 
 class SitInController extends Controller
 {
@@ -28,7 +29,7 @@ class SitInController extends Controller
 
     /**
      * @param  \App\Models\SitIn  $sitInModel
-     * @param  \App\Repositories\SitInRepository  $sitInRepository
+     * @param  \App\Repositories\Dosen\SitInRepository  $sitInRepository
      */
     public function __construct(
         Sitin $sitInModel,
@@ -50,6 +51,24 @@ class SitInController extends Controller
             ->orderByDesc('created_at')->paginate($request->query('show'));
 
         return Response::json(new SitInCollection($sitInes));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\Dosen\SitInUpdateRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(SitInUpdateRequest $request, Sitin $sitin)
+    {
+        $newSitIn = DB::transaction(function () use ($request, $sitin) {
+            $newSitIn = $this->sitInRepository
+                ->update($request, $sitin);
+
+            return $newSitIn;
+        });
+        $newSitIn->load(['mahasiswa']);
+        return Response::okUpdated(new SitInResource($newSitIn));
     }
 
     /**
