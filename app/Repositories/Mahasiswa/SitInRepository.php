@@ -106,38 +106,14 @@ class SitInRepository
         return $sitIn;
     }
 
-    // /**
-    //  * @param  \App\Http\Requests\SitInUpdateRequest  $request
-    //  * @param  \App\Models\SitIn  $checkin
-    //  * @return \App\Models\SitIn
-    //  * @throws \Illuminate\Validation\ValidationException
-    //  */
-    // public function update(SitInUpdateRequest $request, SitIn $checkin)
-    // {
-    //     $input = $request->safe([
-    //         'name',
-    //         'cycleTime',
-    //     ]);
-
-    //     $checkin->update([
-    //         'name'          => $input['name'] ?? $checkin->name,
-    //         'cycle_time'    => $input['cycleTime'] ?? $checkin->cycle_time,
-    //     ]);
-
-
-    //     return $checkin;
-    // }
-
-    // /**
-    //  * @param  \App\Contracts\Request  $request
-    //  * @param  \App\Models\SitIn  $checkin
-    //  * @return \App\Models\SitIn
-    //  */
-    // public function delete(Request $request, SitIn $checkin)
-    // {
-    //     $checkin->delete();
-
-
-    //     return $checkin;
-    // }
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\SitIn  $checkin
+     * @return \App\Models\SitIn
+     */
+    public function delete(Request $request, SitIn $checkin)
+    {
+        $checkin->delete();
+        return $checkin;
+    }
 }

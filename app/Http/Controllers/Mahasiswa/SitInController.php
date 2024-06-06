@@ -52,29 +52,6 @@ class SitInController extends Controller
         return Response::json(new SitInCollection($sitInes));
     }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \App\Http\Requests\SitInStoreRequest  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(SitInStoreRequest $request)
-    // {
-    //     $newSitIn = DB::transaction(function () use ($request) {
-    //         $newSitIn = $this->sitInRepository
-    //             ->store($request);
-
-    //         return $newSitIn;
-    //     });
-    //     $newSitIn->load(['locations', 'schedules']);
-
-    //     return Response::json(
-    //         new SitInResource($newSitIn),
-    //         Response::MESSAGE_CREATED,
-    //         Response::STATUS_CREATED
-    //     );
-    // }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -133,42 +110,21 @@ class SitInController extends Controller
         return Response::json(new SitInResource($sitin));
     }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \App\Http\Requests\SitInUpdateRequest  $request
-    //  * @param  \App\Models\SitIn  $sitIn
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(SitInUpdateRequest $request, SitIn $sitIn)
-    // {
-    //     $updatedSitIn = DB::transaction(function () use ($request, $sitIn) {
-    //         $updatedSitIn = $this->sitInRepository
-    //             ->update($request, $sitIn);
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\SitIn  $sitIn
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, SitIn $sitin)
+    {
+        $deletedSitIn = DB::transaction(function () use ($request, $sitin) {
+            $deletedSitIn = $this->sitInRepository
+                ->delete($request, $sitin);
 
-    //         return $updatedSitIn;
-    //     });
-    //     $updatedSitIn->load(['locations', 'schedules']);
+            return $deletedSitIn;
+        });
 
-    //     return Response::json(new SitInResource($updatedSitIn));
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  \App\Contracts\Request  $request
-    //  * @param  \App\Models\SitIn  $sitIn
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy(Request $request, SitIn $sitIn)
-    // {
-    //     $deletedSitIn = DB::transaction(function () use ($request, $sitIn) {
-    //         $deletedSitIn = $this->sitInRepository
-    //             ->delete($request, $sitIn);
-
-    //         return $deletedSitIn;
-    //     });
-
-    //     return Response::noContent();
-    // }
+        return Response::noContent();
+    }
 }

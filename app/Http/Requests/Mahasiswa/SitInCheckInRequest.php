@@ -31,18 +31,6 @@ class SitInCheckInRequest extends FormRequest
 
     public function messages()
     {
-        return [
-            'name.required' => 'Nama wajib diisi',
-            'name.string' => 'Nama harus karakter',
-            'name.max' => 'Nama tidak boleh lebih dari :max karakter',
-
-            'password.required' => 'Password wajib diisi',
-            'password.min'      => 'Password minimal memiliki :min karakter',
-
-            'email.required' => 'Email wajib diisi',
-            'email.email' => 'Email tidak valid',
-            'email.unique' => 'Email telah digunakan',
-            'email.max' => 'Email tidak boleh lebih dari :max karakter',
-        ];
+        return [];
     }
 }
