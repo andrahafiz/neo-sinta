@@ -2,36 +2,38 @@
 
 namespace App\Http\Controllers\Mahasiswa;
 
+
 use App\Contracts\Response;
 use Illuminate\Http\Request;
-use App\Models\TitleSubmission;
+use App\Models\SeminarLiteratur;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TitleSubmissionResource;
-use App\Http\Resources\TitleSubmissionCollection;
-use App\Repositories\Mahasiswa\TitleSubmissionRepository;
-use App\Http\Requests\Mahasiswa\TitleSubmissionStoreRequest;
-use App\Http\Requests\Mahasiswa\TitleSubmissionUpdateRequest;
+use App\Http\Resources\SeminarLiteraturResource;
+use App\Http\Resources\SeminarLiteraturCollection;
+use App\Repositories\Mahasiswa\SeminarLiteraturRepository;
+use App\Http\Requests\Mahasiswa\SeminarLiteraturStoreRequest;
+use App\Http\Requests\Mahasiswa\SeminarLiteraturUpdateRequest;
 
-class PengajuanJudulController extends Controller
+
+class SeminarLiteraturController extends Controller
 {
     /**
-     * @var \App\Models\TitleSubmission
+     * @var \App\Models\SeminarLiteratur
      */
     protected $titleSubmissionModel;
 
     /**
-     * @var \App\Repositories\Mahasiswa\TitleSubmissionRepository
+     * @var \App\Repositories\Mahasiswa\SeminarLiteraturRepository
      */
     protected $titleSubmissionRepository;
 
     /**
-     * @param  \App\Models\TitleSubmission  $titleSubmissionModel
-     * @param  \App\Repositories\TitleSubmissionRepository  $titleSubmissionRepository
+     * @param  \App\Models\SeminarLiteratur  $titleSubmissionModel
+     * @param  \App\Repositories\SeminarLiteraturRepository  $titleSubmissionRepository
      */
     public function __construct(
-        TitleSubmission $titleSubmissionModel,
-        TitleSubmissionRepository $titleSubmissionRepository
+        SeminarLiteratur $titleSubmissionModel,
+        SeminarLiteraturRepository $titleSubmissionRepository
     ) {
         $this->titleSubmissionModel = $titleSubmissionModel;
         $this->titleSubmissionRepository = $titleSubmissionRepository;
@@ -46,18 +48,18 @@ class PengajuanJudulController extends Controller
     public function index(Request $request)
     {
         $submission = $this->titleSubmissionModel->with('mahasiswa')
-            ->where('mahasiswas_id', auth()->user()->id)->get();
+            ->orderByDesc('created_at')->paginate($request->query('show'));
 
-        return Response::json(new TitleSubmissionCollection($submission));
+        return Response::json(new SeminarLiteraturCollection($submission));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Mahasiswa\TitleSubmissionStoreRequest $request
+     * @param  \App\Http\Requests\Mahasiswa\SeminarLiteraturStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TitleSubmissionStoreRequest $request)
+    public function store(SeminarLiteraturStoreRequest $request)
     {
         $submission = DB::transaction(function () use ($request) {
             $submission = $this->titleSubmissionRepository
@@ -66,7 +68,7 @@ class PengajuanJudulController extends Controller
         });
 
         return Response::json(
-            new TitleSubmissionResource($submission),
+            new SeminarLiteraturResource($submission),
             Response::MESSAGE_CREATED,
             Response::STATUS_CREATED
         );
@@ -78,10 +80,10 @@ class PengajuanJudulController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TitleSubmission $pengajuan_judul)
+    public function show(SeminarLiteratur $pengajuan_judul)
     {
         $pengajuan_judul->load(['mahasiswa', 'lecture']);
-        return Response::json(new TitleSubmissionResource($pengajuan_judul));
+        return Response::json(new SeminarLiteraturResource($pengajuan_judul));
     }
 
     /**
@@ -98,18 +100,18 @@ class PengajuanJudulController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Mahasiswa\TitleSubmissionUpdateRequest  $request
-     * @param  \App\Models\TitleSubmission $pengajuan_judul
+     * @param  \App\Http\Requests\Mahasiswa\SeminarLiteraturUpdateRequest  $request
+     * @param  \App\Models\SeminarLiteratur $pengajuan_judul
      * @return \Illuminate\Http\Response
      */
-    public function update(TitleSubmissionUpdateRequest $request, TitleSubmission $pengajuan_judul)
+    public function update(SeminarLiteraturUpdateRequest $request, SeminarLiteratur $pengajuan_judul)
     {
-        $updatedTitleSubmission = DB::transaction(function () use ($request, $pengajuan_judul) {
-            $updatedTitleSubmission = $this->titleSubmissionRepository
+        $updatedSeminarLiteratur = DB::transaction(function () use ($request, $pengajuan_judul) {
+            $updatedSeminarLiteratur = $this->titleSubmissionRepository
                 ->update($request, $pengajuan_judul);
-            return $updatedTitleSubmission;
+            return $updatedSeminarLiteratur;
         });
-        return Response::json(new TitleSubmissionResource($updatedTitleSubmission));
+        return Response::json(new SeminarLiteraturResource($updatedSeminarLiteratur));
     }
 
     /**
@@ -118,12 +120,12 @@ class PengajuanJudulController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TitleSubmission $pengajuan_judul)
+    public function destroy(SeminarLiteratur $pengajuan_judul)
     {
-        $deleteTitleSubmission = DB::transaction(function () use ($pengajuan_judul) {
-            $deleteTitleSubmission = $this->titleSubmissionRepository
+        $deleteSeminarLiteratur = DB::transaction(function () use ($pengajuan_judul) {
+            $deleteSeminarLiteratur = $this->titleSubmissionRepository
                 ->delete($pengajuan_judul);
-            return $deleteTitleSubmission;
+            return $deleteSeminarLiteratur;
         });
 
         return Response::noContent();

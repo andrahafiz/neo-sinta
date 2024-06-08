@@ -16,7 +16,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         config(['auth.guards.dosen-guard.driver' => 'session']);
-        if (Auth::guard('dosen-guard')->attempt(['nip' => $request->nip, 'password' => $request->password], $request->get('remember'))) {
+        if (Auth::guard('dosen-guard')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
             //generate the token for the user
             $token = auth()->guard('dosen-guard')->user()
                 ->createToken('authToken')->accessToken;

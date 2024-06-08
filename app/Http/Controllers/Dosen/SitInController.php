@@ -77,16 +77,15 @@ class SitInController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function confirm(Request $request, Sitin $sitIn)
+    public function confirm(Request $request)
     {
-        $newSitIn = DB::transaction(function () use ($request, $sitIn) {
+        $newSitIn = DB::transaction(function () use ($request) {
             $newSitIn = $this->sitInRepository
-                ->confirm($request, $sitIn);
+                ->confirm($request);
 
             return $newSitIn;
         });
-        $newSitIn->load(['mahasiswa']);
-        return Response::okUpdated(new SitInResource($newSitIn));
+        return Response::json(null, 'SIT INI TELAH DI KONFIRMASI ');
     }
 
     /**

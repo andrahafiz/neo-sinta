@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('status')->nullable();
             $table->timestamp('date');
-            $table->foreignId('pic');
+            $table->foreignId('pic')->nullable();
             $table->string('check_in_ppt');
-            $table->string('check_in_literatur');
+            $table->text('check_in_literatur');
+            $table->text('note')->nullable();
             $table->foreignId('mahasiswas_id');
             $table->foreignId('approval_by');
 
-            
+
 
             $table->timestamps();
 
@@ -39,7 +40,7 @@ return new class extends Migration
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-                $table->foreign('approval_by')
+            $table->foreign('approval_by')
                 ->references('id')
                 ->on('lecture')
                 ->restrictOnUpdate()

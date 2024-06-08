@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Dosen;
+namespace App\Http\Requests\Mahasiswa;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TitleSubmissionStoreRequest extends FormRequest
+class SeminarLiteraturStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

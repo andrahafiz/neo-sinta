@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Mahasiswa;
+namespace App\Http\Controllers\Dosen;
 
 use App\Contracts\Response;
 use Illuminate\Http\Request;
@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TitleSubmissionResource;
 use App\Http\Resources\TitleSubmissionCollection;
-use App\Repositories\Mahasiswa\TitleSubmissionRepository;
-use App\Http\Requests\Mahasiswa\TitleSubmissionStoreRequest;
-use App\Http\Requests\Mahasiswa\TitleSubmissionUpdateRequest;
+use App\Repositories\Dosen\TitleSubmissionRepository;
+use App\Http\Requests\Dosen\TitleSubmissionStoreRequest;
+use App\Http\Requests\Dosen\TitleSubmissionUpdateRequest;
 
 class PengajuanJudulController extends Controller
 {
@@ -21,7 +21,7 @@ class PengajuanJudulController extends Controller
     protected $titleSubmissionModel;
 
     /**
-     * @var \App\Repositories\Mahasiswa\TitleSubmissionRepository
+     * @var \App\Repositories\Dosen\TitleSubmissionRepository
      */
     protected $titleSubmissionRepository;
 
@@ -46,31 +46,11 @@ class PengajuanJudulController extends Controller
     public function index(Request $request)
     {
         $submission = $this->titleSubmissionModel->with('mahasiswa')
-            ->where('mahasiswas_id', auth()->user()->id)->get();
+            ->orderByDesc('created_at')->paginate($request->query('show'));
 
         return Response::json(new TitleSubmissionCollection($submission));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\Mahasiswa\TitleSubmissionStoreRequest $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(TitleSubmissionStoreRequest $request)
-    {
-        $submission = DB::transaction(function () use ($request) {
-            $submission = $this->titleSubmissionRepository
-                ->store($request);
-            return $submission;
-        });
-
-        return Response::json(
-            new TitleSubmissionResource($submission),
-            Response::MESSAGE_CREATED,
-            Response::STATUS_CREATED
-        );
-    }
 
     /**
      * Display the specified resource.
@@ -84,21 +64,11 @@ class PengajuanJudulController extends Controller
         return Response::json(new TitleSubmissionResource($pengajuan_judul));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Mahasiswa\TitleSubmissionUpdateRequest  $request
+     * @param  \App\Http\Requests\Dosen\TitleSubmissionUpdateRequest  $request
      * @param  \App\Models\TitleSubmission $pengajuan_judul
      * @return \Illuminate\Http\Response
      */
@@ -110,22 +80,5 @@ class PengajuanJudulController extends Controller
             return $updatedTitleSubmission;
         });
         return Response::json(new TitleSubmissionResource($updatedTitleSubmission));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TitleSubmission $pengajuan_judul)
-    {
-        $deleteTitleSubmission = DB::transaction(function () use ($pengajuan_judul) {
-            $deleteTitleSubmission = $this->titleSubmissionRepository
-                ->delete($pengajuan_judul);
-            return $deleteTitleSubmission;
-        });
-
-        return Response::noContent();
     }
 }

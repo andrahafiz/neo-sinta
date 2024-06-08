@@ -20,10 +20,10 @@ return new class extends Migration
             $table->foreignId('pic')->nullable();
             $table->foreignId('mahasiswas_id');
             $table->timestamp('proposed_at')->nullable();
-            $table->timestamp('in_review_at')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('declined_at')->nullable();
             $table->string('dok_pengajuan_judul');
+            $table->string('note')->nullable();
             $table->string('konsentrasi_ilmu');
 
 

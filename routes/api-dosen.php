@@ -3,10 +3,11 @@
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dosen\UserController;
-use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
 use App\Http\Controllers\Dosen\MeController;
+use App\Http\Controllers\Dosen\UserController;
 use App\Http\Controllers\Dosen\SitInController;
+use App\Http\Controllers\Dosen\PengajuanJudulController;
+use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ Route::middleware(['auth:dosen-guard', 'role:dosen|kaprodi'])->group(function ()
     Route::post('logout', [DosenAuthController::class, 'logout']);
     Route::get('/me', MeController::class);
 
-    Route::put('sitin/{sitIn}/confirm', [SitInController::class, 'confirm']);
+    Route::put('sitin/confirm', [SitInController::class, 'confirm']);
     Route::apiResource('sitin', SitInController::class);
+    Route::apiResource('pengajuan-judul', PengajuanJudulController::class);
 });

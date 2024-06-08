@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     {
 
         return [
-            'nip'  => ['string', 'required'],
+            'email'  => ['required', 'email'],
             'password'  => ['required', 'string'],
         ];
     }
@@ -33,8 +33,8 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'nip.required' => 'NIM wajib diisi',
-            'nip.string' => 'NIM harus karakter',
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Harus berformat email',
 
             'password.required' => 'Password wajib diisi',
             'password.string'   => 'Password harus karakter',

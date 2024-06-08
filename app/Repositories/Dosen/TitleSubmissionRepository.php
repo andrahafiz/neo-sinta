@@ -69,48 +69,19 @@ class TitleSubmissionRepository
      */
     public function update(TitleSubmissionUpdateRequest $request, TitleSubmission $pengajuan_judul)
     {
-        $input = $request->safe([
-            'title',
-            'status',
-            'pic',
-            'mahasiswas_id',
-            'proposed_at',
-            'in_review_at',
-            'approved_at',
-            'declined_at',
-            'dok_pengajuan_judul',
-            'konsentrasi_ilmu'
-        ]);
-        $document = $request->file('dok_pengajuan_judul');
-        if ($document instanceof UploadedFile) {
-            $rawPath = $document->store('public/dokumen/pengajuan_judul');
-            $path = str_replace('public/', '', $rawPath);
-        }
+        $input = $request->safe(['status', 'note']);
+        $userId = auth()->user()->id;
+        $status = $input['status'] ?? $pengajuan_judul->status;
+        $now = now();
 
-        $document = $request->file('dok_pengajuan_judul');
-        if ($document instanceof UploadedFile) {
-            $file_path = storage_path() . '/app/' . $pengajuan_judul->dok_pengajuan_judul;
-            if (File::exists($file_path)) {
-                unlink($file_path);
-            }
-            $filename = $document->store('public/dokumen/pengajuan_judul');
-        } else {
-            $filename = $pengajuan_judul->dok_pengajuan_judul;
-        };
         $pengajuan_judul->update([
-            'title'         => $input['title'] ?? $pengajuan_judul->title,
-            'status'        =>  $input['status'] ?? $pengajuan_judul->status,
-            'mahasiswas_id' => $input['mahasiswas_id'] ?? $pengajuan_judul->mahasiswas_id,
-            'pic'           => $input['pic'] ?? $pengajuan_judul->pic,
-            'proposed_at'   => $input['proposed_at'] ?? $pengajuan_judul->proposed_at,
-            'in_review_at'  => $input['in_review_at'] ?? $pengajuan_judul->in_review_at,
-            'approved_at'   => $input['approved_at'] ?? $pengajuan_judul->approved_at,
-            'declined_at'   => $input['declined_at'] ?? $pengajuan_judul->declined_at,
-            'konsentrasi_ilmu'      => $input['konsentrasi_ilmu'] ?? $pengajuan_judul->konsentrasi_ilmu,
-            'dok_pengajuan_judul'   =>  $filename
+            'status'      => $status,
+            'pic'         => $userId,
+            'note'        => $input['note'] ?? $pengajuan_judul->note,
+            'approved_at' => $status == TitleSubmission::STATUS_APPROVE ? $now : null,
+            'declined_at' => $status == TitleSubmission::STATUS_DECLINE ? $now : null,
         ]);
 
-        Logging::log("EDIT PRODUCT", $pengajuan_judul);
         return $pengajuan_judul;
     }
 

@@ -32,22 +32,27 @@ class SitInRepository
 
 
     /**
-     * @return \App\Models\SitIn $sitIn
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function confirm(Request $request, SitIn $sitIn)
+    public function confirm(Request $request)
     {
         $data = $request->validate([
             'action' => ['required', 'in:approve,decline'],
-        ]);
-        $status = $data['action'] == 'approve' ? SitIn::STATUS_APPROVE : Sitin::STATUS_DECLINE;
-
-        $sitIn->update([
-            'status' => $status,
-            'approval_by' => auth()->user()->id
+            'sitin_id' => ['required', 'array'],
+            'sitin_id.*' => ['exists:sitin,id'],
         ]);
 
-        return $sitIn;
+        $status = $data['action'] == 'approve' ? SitIn::STATUS_APPROVE : SitIn::STATUS_DECLINE;
+
+        $updatedRows = $this->sitInModel
+            ->whereIn('id', $data['sitin_id'])
+            ->update([
+                'status' => $status,
+                'approval_by' => auth()->user()->id,
+                'updated_at' => now(),
+            ]);
+
+        return $updatedRows;
     }
 
     /**

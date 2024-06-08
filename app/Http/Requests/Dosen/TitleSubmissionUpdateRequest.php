@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Dosen;
 
+use App\Models\TitleSubmission;
 use Illuminate\Foundation\Http\FormRequest;
 
 class  TitleSubmissionUpdateRequest extends FormRequest
@@ -23,18 +24,13 @@ class  TitleSubmissionUpdateRequest extends FormRequest
      */
     public function rules()
     {
-
+        $status = [
+            TitleSubmission::STATUS_DECLINE,
+            TitleSubmission::STATUS_APPROVE,
+        ];
         return [
-            'title'                 => ['sometimes', 'nullable', 'string'],
-            'dok_pengajuan_judul'   => ['sometimes', 'nullable', 'file'],
-            'konsentrasi_ilmu'      => ['sometimes', 'nullable', 'string'],
-            'status'                => ['sometimes', 'nullable'],
-            'pic'                   => ['sometimes', 'nullable', 'exists:lecture,id'],
-            'mahasiswas_id'         => ['sometimes', 'nullable', 'exists:mahasiswas,id'],
-            'proposed_at'           => ['sometimes', 'nullable', 'date_format:Y-m-d H:i'],
-            'in_review_at'          => ['sometimes', 'nullable', 'date_format:Y-m-d H:i'],
-            'approved_at'           => ['sometimes', 'nullable', 'date_format:Y-m-d H:i'],
-            'declined_at'           => ['sometimes', 'nullable', 'date_format:Y-m-d H:i'],
+            'status'    => ['sometimes', 'nullable', 'in:' . implode(',', $status)],
+            'note'      => ['required_if:status,' . TitleSubmission::STATUS_DECLINE, 'string'],
         ];
     }
 

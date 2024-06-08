@@ -39,6 +39,8 @@ class TitleSubmission extends Model
     protected $table = 'title_submission';
 
     public const STATUS_PROPOSED = 'proposed';
+    public const STATUS_APPROVE = 'approve';
+    public const STATUS_DECLINE = 'declined';
 
     protected $casts = [
         'pic' => 'int',
@@ -55,12 +57,32 @@ class TitleSubmission extends Model
         'pic',
         'mahasiswas_id',
         'proposed_at',
-        'in_review_at',
         'approved_at',
         'declined_at',
+        'note',
         'dok_pengajuan_judul',
         'konsentrasi_ilmu'
     ];
+
+    public function getStatusTextAttribute()
+    {
+        $status = $this->status;
+        switch ($this->status) {
+            case 'proposed':
+                $status = 'Proposed';
+                break;
+            case 'approve':
+                $status = 'Approve';
+                break;
+            case 'declined':
+                $status = 'Tolak';
+                break;
+            default:
+                $status;
+                break;
+        }
+        return $status;
+    }
 
     public function mahasiswa()
     {
