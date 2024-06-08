@@ -25,16 +25,8 @@ class  SeminarLiteraturUpdateRequest extends FormRequest
     {
 
         return [
-            'title'                 => ['sometimes', 'nullable', 'string'],
-            'dok_pengajuan_judul'   => ['sometimes', 'nullable', 'file'],
-            'konsentrasi_ilmu'      => ['sometimes', 'nullable', 'string'],
-            'status'                => ['sometimes', 'nullable'],
-            'pic'                   => ['sometimes', 'nullable', 'exists:lecture,id'],
-            'mahasiswas_id'         => ['sometimes', 'nullable', 'exists:mahasiswas,id'],
-            'proposed_at'           => ['sometimes', 'nullable', 'date_format:Y-m-d H:i'],
-            'in_review_at'          => ['sometimes', 'nullable', 'date_format:Y-m-d H:i'],
-            'approved_at'           => ['sometimes', 'nullable', 'date_format:Y-m-d H:i'],
-            'declined_at'           => ['sometimes', 'nullable', 'date_format:Y-m-d H:i'],
+            'file_ppt'               => ['sometimes', 'required', 'file'],
+            'file_literatur'         => ['sometimes', 'required', 'file'],
         ];
     }
 

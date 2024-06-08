@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class SeminarLiteratur
- * 
+ *
  * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -20,35 +20,75 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SeminarLiteratur extends Model
 {
-	protected $table = 'seminar_literatur';
+    protected $table = 'seminar_literatur';
 
-	protected $casts = [
-		'status' => 'int',
-		'date' => 'datetime',
-		'pic' => 'int',
-		'check_in_ppt' => 'string',
-		'check_in_literatur' => 'string',
-		'mahasiswas_id' => 'int',
-		'approval_by' => 'int'
-	];
+    public const STATUS_PROPOSED = 'proposed';
+    public const STATUS_APPROVE = 'approve';
+    public const STATUS_DECLINE = 'declined';
 
-	protected $fillable = [
-		'status',
-		'date',
-		'pic',
-		'check_in_ppt',
-		'check_in_literatur',
-		'mahasiswas_id',
-		'approval_by'
-	];
+    protected $casts = [
+        'status' => 'string',
+        'date' => 'datetime',
+        'pic' => 'int',
+        'check_in_ppt' => 'string',
+        'check_in_literatur' => 'string',
+        'mahasiswas_id' => 'int',
+        'approval_by' => 'int'
+    ];
 
-	public function lecture()
-	{
-		return $this->belongsTo(Lecture::class, 'approval_by');
-	}
+    protected $fillable = [
+        'status',
+        'date',
+        'pic',
+        'check_in_ppt',
+        'check_in_literatur',
+        'mahasiswas_id',
+        'approval_by'
+    ];
 
-	public function mahasiswa()
-	{
-		return $this->belongsTo(Mahasiswa::class, 'mahasiswas_id');
-	}
+    public function lecture()
+    {
+        return $this->belongsTo(Lecture::class, 'pic');
+    }
+    public function approvalBy()
+    {
+        return $this->belongsTo(Lecture::class, 'approval_by');
+    }
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'mahasiswas_id');
+    }
+
+    public function scopeDataMahasiswa()
+    {
+        $auth = auth()->user()->id;
+        return $this->where('mahasiswas_id', $auth);
+    }
+
+    public function scopeDataDosen()
+    {
+        $auth = auth()->user()->id;
+        return $this->where('pic', $auth);
+    }
+
+    public function getStatusTextAttribute()
+    {
+        $status = $this->status;
+        switch ($this->status) {
+            case 'proposed':
+                $status = 'Proposed';
+                break;
+            case 'approve':
+                $status = 'Approve';
+                break;
+            case 'declined':
+                $status = 'Tolak';
+                break;
+            default:
+                $status;
+                break;
+        }
+        return $status;
+    }
 }

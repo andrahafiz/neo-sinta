@@ -20,23 +20,26 @@ class SeminarLiteraturController extends Controller
     /**
      * @var \App\Models\SeminarLiteratur
      */
-    protected $titleSubmissionModel;
+    protected $seminarLiteraturModel;
 
     /**
      * @var \App\Repositories\Mahasiswa\SeminarLiteraturRepository
      */
-    protected $titleSubmissionRepository;
+    protected $seminarLiteraturRepository;
+
+    protected $user;
 
     /**
-     * @param  \App\Models\SeminarLiteratur  $titleSubmissionModel
-     * @param  \App\Repositories\SeminarLiteraturRepository  $titleSubmissionRepository
+     * @param  \App\Models\SeminarLiteratur  $seminarLiteraturModel
+     * @param  \App\Repositories\SeminarLiteraturRepository  $seminarLiteraturRepository
      */
     public function __construct(
-        SeminarLiteratur $titleSubmissionModel,
-        SeminarLiteraturRepository $titleSubmissionRepository
+        SeminarLiteratur $seminarLiteraturModel,
+        SeminarLiteraturRepository $seminarLiteraturRepository
     ) {
-        $this->titleSubmissionModel = $titleSubmissionModel;
-        $this->titleSubmissionRepository = $titleSubmissionRepository;
+        $this->seminarLiteraturModel = $seminarLiteraturModel;
+        $this->seminarLiteraturRepository = $seminarLiteraturRepository;
+        $this->user = auth()->user();
     }
 
     /**
@@ -47,9 +50,10 @@ class SeminarLiteraturController extends Controller
      */
     public function index(Request $request)
     {
-        $submission = $this->titleSubmissionModel->with('mahasiswa')
-            ->orderByDesc('created_at')->paginate($request->query('show'));
-
+        $submission = $this->seminarLiteraturModel->with('mahasiswa')
+            ->orderByDesc('created_at')
+            ->DataMahasiswa()
+            ->paginate($request->query('show'));
         return Response::json(new SeminarLiteraturCollection($submission));
     }
 
@@ -62,7 +66,7 @@ class SeminarLiteraturController extends Controller
     public function store(SeminarLiteraturStoreRequest $request)
     {
         $submission = DB::transaction(function () use ($request) {
-            $submission = $this->titleSubmissionRepository
+            $submission = $this->seminarLiteraturRepository
                 ->store($request);
             return $submission;
         });
@@ -107,7 +111,7 @@ class SeminarLiteraturController extends Controller
     public function update(SeminarLiteraturUpdateRequest $request, SeminarLiteratur $pengajuan_judul)
     {
         $updatedSeminarLiteratur = DB::transaction(function () use ($request, $pengajuan_judul) {
-            $updatedSeminarLiteratur = $this->titleSubmissionRepository
+            $updatedSeminarLiteratur = $this->seminarLiteraturRepository
                 ->update($request, $pengajuan_judul);
             return $updatedSeminarLiteratur;
         });
@@ -123,7 +127,7 @@ class SeminarLiteraturController extends Controller
     public function destroy(SeminarLiteratur $pengajuan_judul)
     {
         $deleteSeminarLiteratur = DB::transaction(function () use ($pengajuan_judul) {
-            $deleteSeminarLiteratur = $this->titleSubmissionRepository
+            $deleteSeminarLiteratur = $this->seminarLiteraturRepository
                 ->delete($pengajuan_judul);
             return $deleteSeminarLiteratur;
         });

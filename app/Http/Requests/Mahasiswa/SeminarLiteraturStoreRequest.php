@@ -25,17 +25,14 @@ class SeminarLiteraturStoreRequest extends FormRequest
     {
 
         return [
-            'title'                  => ['required', 'string'],
-            'dok_pengajuan_judul'    => ['required', 'file'],
-            'konsentrasi_ilmu'       => ['required', 'string'],
+            'file_ppt'               => ['required', 'file'],
+            'file_literatur'         => ['required', 'array'],
+            'file_literatur.*'       => ['required', 'file'],
         ];
     }
 
     public function messages()
     {
-        return [
-            'title.required' => 'Judul wajib diisi',
-            'title.string' => 'Judul harus karakter',
-        ];
+        return [];
     }
 }

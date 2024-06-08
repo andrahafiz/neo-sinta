@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('seminar_literatur', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('status')->nullable();
-            $table->timestamp('date');
+            $table->string('status', 20)->nullable();
+            $table->timestamp('date')->nullable();
             $table->foreignId('pic')->nullable();
             $table->string('check_in_ppt');
             $table->text('check_in_literatur');
             $table->text('note')->nullable();
             $table->foreignId('mahasiswas_id');
-            $table->foreignId('approval_by');
+            $table->foreignId('approval_by')->nullable();
 
 
 

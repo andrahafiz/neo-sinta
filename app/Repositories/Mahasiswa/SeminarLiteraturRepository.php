@@ -38,27 +38,35 @@ class SeminarLiteraturRepository
     public function store(SeminarLiteraturStoreRequest $request)
     {
         $input = $request->safe([
-            'title', 'dok_pengajuan_judul', 'konsentrasi_ilmu'
+            'file_ppt', 'file_literatur'
         ]);
 
-        $document = $request->file('dok_pengajuan_judul');
-        if ($document instanceof UploadedFile) {
-            $rawPath = $document->store('public/dokumen/pengajuan_judul');
-            $path = str_replace('public/', '', $rawPath);
+        $file_ppt = $request->file('file_ppt');
+        if ($file_ppt instanceof UploadedFile) {
+            $rawPath = $file_ppt->store('public/dokumen/seminarliteratur');
+            $path_ppt = str_replace('public/', '', $rawPath);
+        }
+
+        $file_literatur = $request->file('file_literatur');
+        $path_literatur = array();
+        foreach ($file_literatur as $photo) {
+            if ($photo instanceof UploadedFile) {
+                $rawPath = $photo->store('public/dokumen/seminarliteratur');
+                $path_literatur[] = str_replace('public/', '', $rawPath);
+            }
         }
 
         $mahasiswa = auth()->guard('mahasiswa-guard')->user()->id;
-        $submission = $this->seminarLiteratur->create([
-            'title'         => $input['title'],
+        $seminarLiteratur = $this->seminarLiteratur->create([
             'status'        => $this->seminarLiteratur::STATUS_PROPOSED,
-            'proposed_at'   => now(),
+            'date'          => now(),
             'mahasiswas_id' => $mahasiswa,
-            'konsentrasi_ilmu'      => $input['konsentrasi_ilmu'],
-            'dok_pengajuan_judul'   => $path ?? null,
+            'check_in_ppt'  => $path_ppt ?? null,
+            'check_in_literatur' => json_encode($path_literatur) ?? null,
         ]);
 
-        Logging::log("CREATE PRODUCT", $submission);
-        return $submission;
+        Logging::log("CREATE SEMINAR LITERARUR", $seminarLiteratur);
+        return $seminarLiteratur;
     }
 
     /**
@@ -78,24 +86,24 @@ class SeminarLiteraturRepository
             'in_review_at',
             'approved_at',
             'declined_at',
-            'dok_pengajuan_judul',
-            'konsentrasi_ilmu'
+            'file_ppt',
+            'file_literatur'
         ]);
-        $document = $request->file('dok_pengajuan_judul');
+        $document = $request->file('file_ppt');
         if ($document instanceof UploadedFile) {
             $rawPath = $document->store('public/dokumen/pengajuan_judul');
-            $path = str_replace('public/', '', $rawPath);
+            $path_ppt = str_replace('public/', '', $rawPath);
         }
 
-        $document = $request->file('dok_pengajuan_judul');
+        $document = $request->file('file_ppt');
         if ($document instanceof UploadedFile) {
-            $file_path = storage_path() . '/app/' . $pengajuan_judul->dok_pengajuan_judul;
+            $file_path = storage_path() . '/app/' . $pengajuan_judul->file_ppt;
             if (File::exists($file_path)) {
                 unlink($file_path);
             }
             $filename = $document->store('public/dokumen/pengajuan_judul');
         } else {
-            $filename = $pengajuan_judul->dok_pengajuan_judul;
+            $filename = $pengajuan_judul->file_ppt;
         };
         $pengajuan_judul->update([
             'title'         => $input['title'] ?? $pengajuan_judul->title,
@@ -106,8 +114,8 @@ class SeminarLiteraturRepository
             'in_review_at'  => $input['in_review_at'] ?? $pengajuan_judul->in_review_at,
             'approved_at'   => $input['approved_at'] ?? $pengajuan_judul->approved_at,
             'declined_at'   => $input['declined_at'] ?? $pengajuan_judul->declined_at,
-            'konsentrasi_ilmu'      => $input['konsentrasi_ilmu'] ?? $pengajuan_judul->konsentrasi_ilmu,
-            'dok_pengajuan_judul'   =>  $filename
+            'file_literatur'      => $input['file_literatur'] ?? $pengajuan_judul->file_literatur,
+            'file_ppt'   =>  $filename
         ]);
 
         Logging::log("EDIT PRODUCT", $pengajuan_judul);
