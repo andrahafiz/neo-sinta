@@ -8,6 +8,8 @@ use App\Http\Controllers\Dosen\UserController;
 use App\Http\Controllers\Dosen\SitInController;
 use App\Http\Controllers\Dosen\PengajuanJudulController;
 use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
+use App\Http\Controllers\Dosen\SeminarLiteraturController;
+use App\Models\SeminarLiteratur;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,10 @@ Route::middleware(['auth:dosen-guard', 'role:dosen|kaprodi'])->group(function ()
     Route::get('/me', MeController::class);
 
     Route::put('sitin/confirm', [SitInController::class, 'confirm']);
-    Route::apiResource('sitin', SitInController::class);
-    Route::apiResource('pengajuan-judul', PengajuanJudulController::class);
+    Route::apiResource('sitin', SitInController::class)->only(['index', 'update', 'confirm', 'show']);
+
+    Route::apiResource('pengajuan-judul', PengajuanJudulController::class)->only(['index', 'update', 'show']);
+
+    Route::put('seminar-literatur/{seminar_literatur}/confirm', [SeminarLiteraturController::class, 'confirm']);
+    Route::apiResource('seminar-literatur', SeminarLiteraturController::class)->only(['index', 'show']);
 });
