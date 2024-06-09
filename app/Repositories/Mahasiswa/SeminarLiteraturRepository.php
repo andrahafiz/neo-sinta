@@ -2,12 +2,13 @@
 
 namespace App\Repositories\Mahasiswa;
 
-use App\Models\SeminarLiteratur;
 use App\Contracts\Logging;
+use App\Models\SeminarLiteratur;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
-use App\Http\Requests\Mahasiswa\SeminarLiteraturUpdateRequest;
+use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Mahasiswa\SeminarLiteraturStoreRequest;
+use App\Http\Requests\Mahasiswa\SeminarLiteraturUpdateRequest;
 
 class SeminarLiteraturRepository
 {
@@ -71,65 +72,71 @@ class SeminarLiteraturRepository
 
     /**
      * @param  \App\Http\Requests\SeminarLiteraturUpdateRequest  $request
-     * @param  \App\Models\SeminarLiteratur  $pengajuan_judul
+     * @param  \App\Models\SeminarLiteratur  $seminar_literatur
      * @return \App\Models\SeminarLiteratur
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(SeminarLiteraturUpdateRequest $request, SeminarLiteratur $pengajuan_judul)
+    public function update(SeminarLiteraturUpdateRequest $request, SeminarLiteratur $seminar_literatur)
     {
         $input = $request->safe([
-            'title',
-            'status',
-            'pic',
-            'mahasiswas_id',
-            'proposed_at',
-            'in_review_at',
-            'approved_at',
-            'declined_at',
-            'file_ppt',
-            'file_literatur'
+            'file_ppt', 'file_literatur'
         ]);
-        $document = $request->file('file_ppt');
-        if ($document instanceof UploadedFile) {
-            $rawPath = $document->store('public/dokumen/pengajuan_judul');
-            $path_ppt = str_replace('public/', '', $rawPath);
-        }
 
         $document = $request->file('file_ppt');
         if ($document instanceof UploadedFile) {
-            $file_path = storage_path() . '/app/' . $pengajuan_judul->file_ppt;
+            $file_path = storage_path() . '/app/public/' . $seminar_literatur->check_in_ppt;
             if (File::exists($file_path)) {
                 unlink($file_path);
             }
-            $filename = $document->store('public/dokumen/pengajuan_judul');
+            $filenamePPT = $document->store('public/dokumen/seminarliteratur');
+            $filenamePPT = str_replace('public/', '', $filenamePPT);
         } else {
-            $filename = $pengajuan_judul->file_ppt;
+            $filenamePPT = $seminar_literatur->check_in_ppt;
         };
-        $pengajuan_judul->update([
-            'title'         => $input['title'] ?? $pengajuan_judul->title,
-            'status'        =>  $input['status'] ?? $pengajuan_judul->status,
-            'mahasiswas_id' => $input['mahasiswas_id'] ?? $pengajuan_judul->mahasiswas_id,
-            'pic'           => $input['pic'] ?? $pengajuan_judul->pic,
-            'proposed_at'   => $input['proposed_at'] ?? $pengajuan_judul->proposed_at,
-            'in_review_at'  => $input['in_review_at'] ?? $pengajuan_judul->in_review_at,
-            'approved_at'   => $input['approved_at'] ?? $pengajuan_judul->approved_at,
-            'declined_at'   => $input['declined_at'] ?? $pengajuan_judul->declined_at,
-            'file_literatur'      => $input['file_literatur'] ?? $pengajuan_judul->file_literatur,
-            'file_ppt'   =>  $filename
+
+        $file_literatur = $request->file('file_literatur');
+        if ($request->has('file_literatur')) {
+            $literatur = json_decode($seminar_literatur->check_in_literatur);
+            foreach ($literatur as $row) {
+                $file_path = storage_path() . '/app/public/' . $row;
+                if (File::exists($file_path)) {
+                    unlink($file_path);
+                }
+            }
+
+            $file_literatur = $request->file('file_literatur');
+            $path_literatur = array();
+            foreach ($file_literatur as $photo) {
+                if ($photo instanceof UploadedFile) {
+                    $rawPath = $photo->store('public/dokumen/seminarliteratur');
+                    $path_literatur[] = str_replace('public/', '', $rawPath);
+                }
+            }
+        }
+
+        $seminar_literatur->update([
+            'status'        => $this->seminarLiteratur::STATUS_PROPOSED,
+            'date'          => now(),
+            'check_in_ppt'  => $filenamePPT,
+            'check_in_literatur' => json_encode($path_literatur),
         ]);
 
-        Logging::log("EDIT PRODUCT", $pengajuan_judul);
-        return $pengajuan_judul;
+        Logging::log("EDIT SEMINAR LITERATUR", $seminar_literatur);
+        return $seminar_literatur;
     }
 
     /**
-     * @param  \App\Models\SeminarLiteratur  $pengajuan_judul
+     * @param  \App\Models\SeminarLiteratur  $seminarLiteratur
      * @return \App\Models\SeminarLiteratur
      */
-    public function delete(SeminarLiteratur $pengajuan_judul): bool
+    public function delete(SeminarLiteratur $seminarLiteratur): bool
     {
-        Logging::log("DELETE PRODUCT", $pengajuan_judul);
-        $pengajuan_judul = $pengajuan_judul->delete();
-        return $pengajuan_judul;
+        Logging::log("DELETE SEMINAR LITERATUR", $seminarLiteratur);
+        if ($seminarLiteratur->status == SeminarLiteratur::STATUS_APPROVE) {
+            throw ValidationException::withMessages(['message' => 'Seminar tidak dapat dihapus dikarenakan telah diapprove']);
+        }
+
+        $seminarLiteratur = $seminarLiteratur->delete();
+        return $seminarLiteratur;
     }
 }

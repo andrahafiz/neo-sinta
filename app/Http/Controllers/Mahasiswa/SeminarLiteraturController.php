@@ -84,10 +84,10 @@ class SeminarLiteraturController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SeminarLiteratur $pengajuan_judul)
+    public function show(SeminarLiteratur $seminar_literatur)
     {
-        $pengajuan_judul->load(['mahasiswa', 'lecture']);
-        return Response::json(new SeminarLiteraturResource($pengajuan_judul));
+        $seminar_literatur->load(['mahasiswa', 'lecture']);
+        return Response::json(new SeminarLiteraturResource($seminar_literatur));
     }
 
     /**
@@ -105,14 +105,14 @@ class SeminarLiteraturController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\Mahasiswa\SeminarLiteraturUpdateRequest  $request
-     * @param  \App\Models\SeminarLiteratur $pengajuan_judul
+     * @param  \App\Models\SeminarLiteratur $seminar_literatur
      * @return \Illuminate\Http\Response
      */
-    public function update(SeminarLiteraturUpdateRequest $request, SeminarLiteratur $pengajuan_judul)
+    public function update(SeminarLiteraturUpdateRequest $request, SeminarLiteratur $seminar_literatur)
     {
-        $updatedSeminarLiteratur = DB::transaction(function () use ($request, $pengajuan_judul) {
+        $updatedSeminarLiteratur = DB::transaction(function () use ($request, $seminar_literatur) {
             $updatedSeminarLiteratur = $this->seminarLiteraturRepository
-                ->update($request, $pengajuan_judul);
+                ->update($request, $seminar_literatur);
             return $updatedSeminarLiteratur;
         });
         return Response::json(new SeminarLiteraturResource($updatedSeminarLiteratur));
@@ -124,11 +124,11 @@ class SeminarLiteraturController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SeminarLiteratur $pengajuan_judul)
+    public function destroy(SeminarLiteratur $seminar_literatur)
     {
-        $deleteSeminarLiteratur = DB::transaction(function () use ($pengajuan_judul) {
+        $deleteSeminarLiteratur = DB::transaction(function () use ($seminar_literatur) {
             $deleteSeminarLiteratur = $this->seminarLiteraturRepository
-                ->delete($pengajuan_judul);
+                ->delete($seminar_literatur);
             return $deleteSeminarLiteratur;
         });
 

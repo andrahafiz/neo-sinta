@@ -23,10 +23,10 @@ class  SeminarLiteraturUpdateRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
-            'file_ppt'               => ['sometimes', 'required', 'file'],
-            'file_literatur'         => ['sometimes', 'required', 'file'],
+            'file_ppt'               => ['sometimes', 'nullable', 'file'],
+            'file_literatur'         => ['sometimes', 'nullable', 'array'],
+            'file_literatur.*'         => ['required', 'file'],
         ];
     }
 
