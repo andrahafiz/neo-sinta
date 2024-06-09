@@ -22,9 +22,6 @@ use App\Http\Controllers\Mahasiswa\AuthController as MahasiswaAuthController;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    $category = Category::all();
-});
 
 Route::post('/register', [MahasiswaAuthController::class, 'register']);
 Route::post('/login', [MahasiswaAuthController::class, 'login']);
