@@ -20,10 +20,6 @@ class SeminarProyekResource extends JsonResource
             'name' => $this->mahasiswa?->name,
         ] : null;
 
-        $approvalBy = $this->lecture ? [
-            'id' => $this->lecture?->id,
-            'name' => $this->lecture?->name,
-        ] : null;
         $lecture = $this->lecture ? [
             'id' => $this->lecture?->id,
             'name' => $this->lecture?->name,
@@ -34,16 +30,14 @@ class SeminarProyekResource extends JsonResource
             'title'            => $this->title,
             'status'            => $this->status,
             'date'       => $this->date?->format('c'),
-            'pic'            => $lecture,      
+            'pic'            => $lecture,
 
             'proposedAt'    => $this->proposed_at?->format('c'),
-            'inReviewAt'    => $this->in_review_at?->format('c'),
             'approvedAt'    => $this->approved_at?->format('c'),
             'declinedAt'    => $this->declined_at?->format('c'),
             'dokPerSemProyek'  => $this->dok_per_sem_proyek ? url('/') . '/storage/' . $this->dok_per_sem_proyek : null,
-               
+
             'mahasiswa'         => $mahasiswa,
-            // 'approvalBy'        => $approvalBy,
             'createdAt'   => $this->created_at?->format('c'),
             'updatedAt'   => $this->updated_at?->format('c'),
         ];

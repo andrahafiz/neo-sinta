@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $dok_per_sem_proyek
  * @property int $mahasiswas_id
  * @property Carbon|null $proposed_at
- * @property Carbon|null $in_review_at
  * @property Carbon|null $approved_at
  * @property Carbon|null $declined_at
  * @property Carbon|null $created_at
@@ -40,13 +39,16 @@ class SeminarProyek extends Model
     use SoftDeletes;
     protected $table = 'seminar_proyek';
 
+    public const STATUS_PROPOSED = 'proposed';
+    public const STATUS_APPROVE = 'approve';
+    public const STATUS_DECLINE = 'declined';
+
     protected $casts = [
-        'status' => 'int',
+        'status' => 'string',
         'date' => 'datetime',
         'pic' => 'int',
         'mahasiswas_id' => 'int',
         'proposed_at' => 'datetime',
-        'in_review_at' => 'datetime',
         'approved_at' => 'datetime',
         'declined_at' => 'datetime'
     ];
@@ -59,7 +61,6 @@ class SeminarProyek extends Model
         'dok_per_sem_proyek',
         'mahasiswas_id',
         'proposed_at',
-        'in_review_at',
         'approved_at',
         'declined_at'
     ];
@@ -72,5 +73,37 @@ class SeminarProyek extends Model
     public function lecture()
     {
         return $this->belongsTo(Lecture::class, 'pic');
+    }
+
+    public function scopeDataMahasiswa()
+    {
+        $auth = auth()->user()->id;
+        return $this->where('mahasiswas_id', $auth);
+    }
+
+    public function scopeDataDosen()
+    {
+        $auth = auth()->user()->id;
+        return $this->where('pic', $auth);
+    }
+
+    public function getStatusTextAttribute()
+    {
+        $status = $this->status;
+        switch ($this->status) {
+            case 'proposed':
+                $status = 'Proposed';
+                break;
+            case 'approve':
+                $status = 'Approve';
+                break;
+            case 'declined':
+                $status = 'Tolak';
+                break;
+            default:
+                $status;
+                break;
+        }
+        return $status;
     }
 }

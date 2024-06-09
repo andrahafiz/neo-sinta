@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('seminar_proyek', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->tinyInteger('status')->nullable();
+            $table->string('status', 20)->nullable();
             $table->timestamp('date');
-            $table->foreignId('pic');
+            $table->foreignId('pic')->nullable();
+            $table->string('dok_per_sem_proyek');
             $table->string('dok_per_sem_proyek');
             $table->foreignId('mahasiswas_id');
             $table->timestamp('proposed_at')->nullable();
-            $table->timestamp('in_review_at')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('declined_at')->nullable();
             $table->timestamps();
@@ -34,7 +34,7 @@ return new class extends Migration
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-                $table->foreign('mahasiswas_id')
+            $table->foreign('mahasiswas_id')
                 ->references('id')
                 ->on('mahasiswas')
                 ->restrictOnUpdate()
