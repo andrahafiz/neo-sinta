@@ -9,6 +9,7 @@ use App\Http\Controllers\Dosen\UserController;
 use App\Http\Controllers\Dosen\SitInController;
 use App\Http\Controllers\Dosen\PengajuanJudulController;
 use App\Http\Controllers\Dosen\SeminarLiteraturController;
+use App\Http\Controllers\Dosen\SeminarProyekController;
 use App\Http\Controllers\Dosen\SeminarPraProposalController;
 use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
 
@@ -44,4 +45,7 @@ Route::middleware(['auth:dosen-guard', 'role:dosen|kaprodi'])->group(function ()
 
     Route::put('seminar-praproposal/{seminar_praproposal}/confirm', [SeminarPraProposalController::class, 'confirm']);
     Route::apiResource('seminar-praproposal', SeminarPraProposalController::class)->only(['index', 'show']);
+
+    Route::put('seminar-proyek/{seminar_proyek}/confirm', [SeminarProyekController::class, 'confirm']);
+    Route::apiResource('seminar-proyek', SeminarProyekController::class)->only(['index', 'show']);
 });

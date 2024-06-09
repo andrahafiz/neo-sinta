@@ -29,6 +29,7 @@ class SeminarProyekResource extends JsonResource
             'id'         => $this->id,
             'title'      => $this->title,
             'status'     => $this->status,
+            'statusText'     => $this->statusText,
             'date'       => $this->date?->format('c'),
             'pic'        => $lecture,
 
