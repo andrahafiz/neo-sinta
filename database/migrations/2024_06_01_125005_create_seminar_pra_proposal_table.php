@@ -18,17 +18,16 @@ return new class extends Migration
 
             $table->timestamp('date');
             $table->string('title');
-            $table->tinyInteger('status')->nullable();
-            $table->foreignId('pic');
+            $table->string('status', 20)->nullable();
+            $table->foreignId('pic')->nullable();
             $table->timestamp('proposed_at')->nullable();
-            $table->timestamp('in_review_at')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('declined_at')->nullable();
             $table->string('draf_pra_pro');
             $table->string('pra_pro_ppt');
             $table->string('dok_persetujuan_pra_pro');
             $table->foreignId('mahasiswas_id');
-            $table->foreignId('approval_by');
+            $table->foreignId('approval_by')->nullable();
 
 
             $table->timestamps();
@@ -40,7 +39,7 @@ return new class extends Migration
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-                $table->foreign('approval_by')
+            $table->foreign('approval_by')
                 ->references('id')
                 ->on('lecture')
                 ->restrictOnUpdate()
