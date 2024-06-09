@@ -43,7 +43,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\User::factory(count: 2)->create();
-        \App\Models\Product::factory(count: 1)->create();
 
         $role_mahasiswa = Role::create(['name' => 'mahasiswa', 'guard_name' => 'mahasiswa-guard']);
 

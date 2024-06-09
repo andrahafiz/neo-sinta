@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('pra_pro_ppt');
             $table->string('dok_persetujuan_pra_pro');
             $table->foreignId('mahasiswas_id');
+            $table->text('note')->nullable();
             $table->foreignId('approval_by')->nullable();
 
 

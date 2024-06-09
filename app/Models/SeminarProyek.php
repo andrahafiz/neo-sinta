@@ -60,6 +60,7 @@ class SeminarProyek extends Model
         'pic',
         'dok_per_sem_proyek',
         'mahasiswas_id',
+        'note',
         'proposed_at',
         'approved_at',
         'declined_at'

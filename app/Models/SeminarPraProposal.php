@@ -66,6 +66,7 @@ class SeminarPraProposal extends Model
         'pra_pro_ppt',
         'dok_persetujuan_pra_pro',
         'mahasiswas_id',
+        'note',
         'approval_by'
     ];
 

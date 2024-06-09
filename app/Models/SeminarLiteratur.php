@@ -41,6 +41,7 @@ class SeminarLiteratur extends Model
         'date',
         'pic',
         'check_in_ppt',
+        'note',
         'check_in_literatur',
         'mahasiswas_id',
         'approval_by'
