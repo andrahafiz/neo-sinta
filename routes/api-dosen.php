@@ -2,14 +2,15 @@
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\SeminarLiteratur;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dosen\MeController;
 use App\Http\Controllers\Dosen\UserController;
 use App\Http\Controllers\Dosen\SitInController;
 use App\Http\Controllers\Dosen\PengajuanJudulController;
-use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
 use App\Http\Controllers\Dosen\SeminarLiteraturController;
-use App\Models\SeminarLiteratur;
+use App\Http\Controllers\Dosen\SeminarPraProposalController;
+use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,7 @@ Route::middleware(['auth:dosen-guard', 'role:dosen|kaprodi'])->group(function ()
 
     Route::put('seminar-literatur/{seminar_literatur}/confirm', [SeminarLiteraturController::class, 'confirm']);
     Route::apiResource('seminar-literatur', SeminarLiteraturController::class)->only(['index', 'show']);
+
+    Route::put('seminar-praproposal/{seminar_praproposal}/confirm', [SeminarPraProposalController::class, 'confirm']);
+    Route::apiResource('seminar-praproposal', SeminarPraProposalController::class)->only(['index', 'show']);
 });

@@ -37,15 +37,16 @@ class SeminarPraProposalResource extends JsonResource
             'statusText' => $this->statusText,
             'pic'        => $lecture,
 
-            'proposedAt'    => $this->proposed_at?->format('c'),
-            'approvedAt'    => $this->approved_at?->format('c'),
-            'declinedAt'    => $this->declined_at?->format('c'),
-            'drafPraPro'  => $this->draf_pra_pro ? url('/') . '/storage/' . $this->draf_pra_pro : null,
+            'proposedAt' => $this->proposed_at?->format('c'),
+            'approvedAt' => $this->approved_at?->format('c'),
+            'declinedAt' => $this->declined_at?->format('c'),
+            'drafPraPro' => $this->draf_pra_pro ? url('/') . '/storage/' . $this->draf_pra_pro : null,
             'praProPpt'  => $this->pra_pro_ppt ? url('/') . '/storage/' . $this->pra_pro_ppt : null,
             'dokPersetujuanPraPro'  => $this->dok_persetujuan_pra_pro ? url('/') . '/storage/' . $this->dok_persetujuan_pra_pro : null,
 
-            'mahasiswa'         => $mahasiswa,
-            'approvalBy'        => $approvalBy,
+            'mahasiswa'   => $mahasiswa,
+            'approvalBy'  => $approvalBy,
+            'note'        => $this->note,
             'createdAt'   => $this->created_at?->format('c'),
             'updatedAt'   => $this->updated_at?->format('c'),
         ];

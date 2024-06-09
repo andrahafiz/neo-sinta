@@ -42,6 +42,7 @@ class SeminarLiteraturResource extends JsonResource
             'mahasiswa'     => $mahasiswa,
             'pic'           => $lecture,
             'approvalBy'    => $approvalBy,
+            'note'          => $this->note,
             'createdAt'     => $this->created_at?->format('c'),
             'updatedAt'     => $this->updated_at?->format('c'),
         ];

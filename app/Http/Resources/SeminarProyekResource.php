@@ -27,19 +27,19 @@ class SeminarProyekResource extends JsonResource
 
         return [
             'id'         => $this->id,
-            'title'            => $this->title,
-            'status'            => $this->status,
+            'title'      => $this->title,
+            'status'     => $this->status,
             'date'       => $this->date?->format('c'),
-            'pic'            => $lecture,
+            'pic'        => $lecture,
 
-            'proposedAt'    => $this->proposed_at?->format('c'),
-            'approvedAt'    => $this->approved_at?->format('c'),
-            'declinedAt'    => $this->declined_at?->format('c'),
+            'proposedAt' => $this->proposed_at?->format('c'),
+            'approvedAt' => $this->approved_at?->format('c'),
+            'declinedAt' => $this->declined_at?->format('c'),
             'dokPerSemProyek'  => $this->dok_per_sem_proyek ? url('/') . '/storage/' . $this->dok_per_sem_proyek : null,
-
-            'mahasiswa'         => $mahasiswa,
-            'createdAt'   => $this->created_at?->format('c'),
-            'updatedAt'   => $this->updated_at?->format('c'),
+            'note'       => $this->note,
+            'mahasiswa'  => $mahasiswa,
+            'createdAt'  => $this->created_at?->format('c'),
+            'updatedAt'  => $this->updated_at?->format('c'),
         ];
     }
 }
