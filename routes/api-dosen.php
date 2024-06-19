@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dosen\MeController;
 use App\Http\Controllers\Dosen\UserController;
 use App\Http\Controllers\Dosen\SitInController;
+use App\Http\Controllers\Dosen\SeminarHasilController;
 use App\Http\Controllers\Dosen\SeminarProyekController;
 use App\Http\Controllers\Dosen\PengajuanJudulController;
 use App\Http\Controllers\Dosen\SeminarProposalController;
@@ -48,4 +49,7 @@ Route::middleware(['auth:dosen-guard', 'role:dosen|kaprodi'])->group(function ()
 
     Route::put('seminar-proposal/{seminar_proposal}/confirm', [SeminarProposalController::class, 'confirm']);
     Route::apiResource('seminar-proposal', SeminarProposalController::class)->only(['index', 'show']);
+
+    Route::put('seminar-hasil/{seminar_hasil}/confirm', [SeminarHasilController::class, 'confirm']);
+    Route::apiResource('seminar-hasil', SeminarHasilController::class)->only(['index', 'show']);
 });

@@ -33,6 +33,7 @@ class SeminarHasilResource extends JsonResource
             'id'         => $this->id,
             'title'            => $this->title,
             'status'            => $this->status,
+            'statusText'            => $this->statusText,
             'date'       => $this->date?->format('c'),
             'pic'            => $lecture,
 
@@ -46,7 +47,7 @@ class SeminarHasilResource extends JsonResource
             'loa'  => $this->loa ? url('/') . '/storage/' . $this->loa : null,
             'toefl'  => $this->toefl ? url('/') . '/storage/' . $this->toefl : null,
             'plagiarisme'  => $this->plagiarisme ? url('/') . '/storage/' . $this->plagiarisme : null,
-
+            'note' => $this->note,
             'mahasiswa'         => $mahasiswa,
             'approvalBy'        => $approvalBy,
             'createdAt'   => $this->created_at?->format('c'),

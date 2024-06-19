@@ -61,6 +61,7 @@ class SeminarHasil extends Model
     protected $fillable = [
         'title',
         'status',
+        'date',
         'pic',
         'dok_persetujuan_sem_hasil',
         'draf_tesis',
