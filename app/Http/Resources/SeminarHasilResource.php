@@ -34,15 +34,14 @@ class SeminarHasilResource extends JsonResource
             'title'            => $this->title,
             'status'            => $this->status,
             'date'       => $this->date?->format('c'),
-            'pic'            => $lecture,      
+            'pic'            => $lecture,
 
             'proposedAt'    => $this->proposed_at?->format('c'),
-            'inReviewAt'    => $this->in_review_at?->format('c'),
             'approvedAt'    => $this->approved_at?->format('c'),
             'declinedAt'    => $this->declined_at?->format('c'),
-            
+
             'dokPersetujuanSemHasil'  => $this->dok_persetujuan_sem_hasil ? url('/') . '/storage/' . $this->dok_persetujuan_sem_hasil : null,
-            'drafTesis'  => $this->draf_tesis ? url('/') . '/storage/' . $this->draf_tesis : null, 
+            'drafTesis'  => $this->draf_tesis ? url('/') . '/storage/' . $this->draf_tesis : null,
             'tesisPpt'  => $this->tesis_ppt ? url('/') . '/storage/' . $this->tesis_ppt : null,
             'loa'  => $this->loa ? url('/') . '/storage/' . $this->loa : null,
             'toefl'  => $this->toefl ? url('/') . '/storage/' . $this->toefl : null,

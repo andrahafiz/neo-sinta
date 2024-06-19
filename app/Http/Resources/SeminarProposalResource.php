@@ -38,7 +38,6 @@ class SeminarProposalResource extends JsonResource
             'pic'        => $lecture,
 
             'proposedAt' => $this->proposed_at?->format('c'),
-            'inReviewAt' => $this->in_review_at?->format('c'),
             'approvedAt' => $this->approved_at?->format('c'),
             'declinedAt' => $this->declined_at?->format('c'),
             'drafPro'    => $this->draf_pro ? url('/') . '/storage/' . $this->draf_pro : null,
