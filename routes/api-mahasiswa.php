@@ -10,6 +10,7 @@ use App\Http\Controllers\Mahasiswa\PengajuanJudulController;
 use App\Http\Controllers\Mahasiswa\SeminarLiteraturController;
 use App\Http\Controllers\Mahasiswa\SeminarPraProposalController;
 use App\Http\Controllers\Mahasiswa\AuthController as MahasiswaAuthController;
+use App\Http\Controllers\Mahasiswa\SeminarHasilController;
 use App\Http\Controllers\Mahasiswa\SeminarProposalController;
 
 /*
@@ -41,4 +42,5 @@ Route::middleware(['auth:mahasiswa-guard', 'role:mahasiswa'])->group(function ()
     Route::apiResource('seminar-praproposal', SeminarPraProposalController::class);
     Route::apiResource('seminar-proyek', SeminarProyekController::class);
     Route::apiResource('seminar-proposal', SeminarProposalController::class);
+    Route::apiResource('seminar-hasil', SeminarHasilController::class);
 });

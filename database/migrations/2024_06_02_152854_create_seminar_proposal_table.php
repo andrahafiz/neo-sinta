@@ -45,7 +45,7 @@ return new class extends Migration
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-            $table->foreign('pic')
+            $table->foreign('approval_by')
                 ->references('id')
                 ->on('lecture')
                 ->restrictOnUpdate()

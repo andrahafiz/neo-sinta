@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('seminar_hasil', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->tinyInteger('status')->nullable();
+            $table->string('status', 20)->nullable();
             $table->foreignId('pic')->nullable();
             $table->string('dok_persetujuan_sem_hasil');
             $table->string('draf_tesis');
@@ -25,11 +25,12 @@ return new class extends Migration
             $table->string('toefl');
             $table->string('plagiarisme');
             $table->foreignId('mahasiswas_id');
-            $table->foreignId('approval_by');
+            $table->foreignId('approval_by')->nullable();
             $table->timestamp('proposed_at')->nullable();
             $table->timestamp('in_review_at')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('declined_at')->nullable();
+            $table->text('note')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -40,12 +41,11 @@ return new class extends Migration
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-                $table->foreign('approval_by')
+            $table->foreign('approval_by')
                 ->references('id')
                 ->on('lecture')
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
-
         });
     }
 
