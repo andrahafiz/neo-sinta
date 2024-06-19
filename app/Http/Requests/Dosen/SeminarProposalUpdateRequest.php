@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Dosen;
 
-use App\Models\SeminarPraProposal;
+use App\Models\SeminarProposal;
 use Illuminate\Foundation\Http\FormRequest;
 
-class  SeminarPraProposalUpdateRequest extends FormRequest
+class  SeminarProposalUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,12 @@ class  SeminarPraProposalUpdateRequest extends FormRequest
     public function rules()
     {
         $status = [
-            SeminarPraProposal::STATUS_DECLINE,
-            SeminarPraProposal::STATUS_APPROVE,
+            SeminarProposal::STATUS_DECLINE,
+            SeminarProposal::STATUS_APPROVE,
         ];
         return [
             'status'    => ['sometimes', 'nullable', 'in:' . implode(',', $status)],
-            'note'      => ['required_if:status,' . SeminarPraProposal::STATUS_DECLINE, 'string'],
+            'note'      => ['required_if:status,' . SeminarProposal::STATUS_DECLINE, 'string'],
         ];
     }
 

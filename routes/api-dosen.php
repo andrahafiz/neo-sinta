@@ -7,9 +7,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dosen\MeController;
 use App\Http\Controllers\Dosen\UserController;
 use App\Http\Controllers\Dosen\SitInController;
-use App\Http\Controllers\Dosen\PengajuanJudulController;
-use App\Http\Controllers\Dosen\SeminarLiteraturController;
 use App\Http\Controllers\Dosen\SeminarProyekController;
+use App\Http\Controllers\Dosen\PengajuanJudulController;
+use App\Http\Controllers\Dosen\SeminarProposalController;
+use App\Http\Controllers\Dosen\SeminarLiteraturController;
 use App\Http\Controllers\Dosen\SeminarPraProposalController;
 use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
 
@@ -23,10 +24,6 @@ use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::get('/user', function (Request $request) {
-    $category = Category::all();
-});
 
 Route::post('/register', [DosenAuthController::class, 'register']);
 Route::post('/login', [DosenAuthController::class, 'login']);
@@ -48,4 +45,7 @@ Route::middleware(['auth:dosen-guard', 'role:dosen|kaprodi'])->group(function ()
 
     Route::put('seminar-proyek/{seminar_proyek}/confirm', [SeminarProyekController::class, 'confirm']);
     Route::apiResource('seminar-proyek', SeminarProyekController::class)->only(['index', 'show']);
+
+    Route::put('seminar-proposal/{seminar_proposal}/confirm', [SeminarProposalController::class, 'confirm']);
+    Route::apiResource('seminar-proposal', SeminarProposalController::class)->only(['index', 'show']);
 });
