@@ -73,6 +73,11 @@ class SeminarProyekRepository
         $input = $request->safe([
             'dok_per_sem_proyek'
         ]);
+
+        if ($seminar_proyek->status == SeminarProyek::STATUS_APPROVE) {
+            throw ValidationException::withMessages(['message' => 'Seminar tidak dapat diubah dikarenakan telah diapprove']);
+        }
+
         $document = $request->file('dok_per_sem_proyek');
 
         if ($document instanceof UploadedFile) {

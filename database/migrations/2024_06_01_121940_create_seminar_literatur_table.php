@@ -23,9 +23,6 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->foreignId('mahasiswas_id');
             $table->foreignId('approval_by')->nullable();
-
-
-
             $table->timestamps();
 
             $table->foreign('pic')

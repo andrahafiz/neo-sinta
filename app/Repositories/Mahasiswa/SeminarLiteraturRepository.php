@@ -82,6 +82,10 @@ class SeminarLiteraturRepository
             'file_ppt', 'file_literatur'
         ]);
 
+        if ($seminar_literatur->status == SeminarLiteratur::STATUS_APPROVE) {
+            throw ValidationException::withMessages(['message' => 'Seminar tidak dapat diubah dikarenakan telah diapprove']);
+        }
+
         $document = $request->file('file_ppt');
         if ($document instanceof UploadedFile) {
             $file_path = storage_path() . '/app/public/' . $seminar_literatur->check_in_ppt;

@@ -86,6 +86,11 @@ class SeminarPraProposalRepository
         $input = $request->safe([
             'draf_pra_pro', 'pra_pro_ppt', 'dok_persetujuan_pra_pro'
         ]);
+
+        if ($seminar_praproposal->status == SeminarPraProposal::STATUS_APPROVE) {
+            throw ValidationException::withMessages(['message' => 'Seminar tidak dapat diubah dikarenakan telah diapprove']);
+        }
+
         $document = $request->file('draf_pra_pro');
         if ($document instanceof UploadedFile) {
             $file_path = storage_path() . '/app/public/' . $seminar_praproposal->draf_pra_pro;
@@ -95,7 +100,7 @@ class SeminarPraProposalRepository
             $filenameDraf = $document->store('public/dokumen/seminarpraproposal');
             $filenameDraf = str_replace('public/', '', $filenameDraf);
         } else {
-            $filenameDraf = $seminar_praproposal->check_in_ppt;
+            $filenameDraf = $seminar_praproposal->draf_pra_pro;
         };
 
         $document = $request->file('pra_pro_ppt');
@@ -107,7 +112,7 @@ class SeminarPraProposalRepository
             $filenamePPT = $document->store('public/dokumen/seminarpraproposal');
             $filenamePPT = str_replace('public/', '', $filenamePPT);
         } else {
-            $filenamePPT = $seminar_praproposal->check_in_ppt;
+            $filenamePPT = $seminar_praproposal->pra_pro_ppt;
         };
 
         $document = $request->file('dok_persetujuan_pra_pro');
@@ -119,7 +124,7 @@ class SeminarPraProposalRepository
             $filenamePersetujuan = $document->store('public/dokumen/seminarpraproposal');
             $filenamePersetujuan = str_replace('public/', '', $filenamePersetujuan);
         } else {
-            $filenamePersetujuan = $seminar_praproposal->check_in_ppt;
+            $filenamePersetujuan = $seminar_praproposal->dok_persetujuan_pra_pro;
         };
 
         $seminar_praproposal->update([
