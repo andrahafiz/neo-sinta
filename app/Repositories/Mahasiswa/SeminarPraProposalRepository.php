@@ -61,7 +61,7 @@ class SeminarPraProposalRepository
 
         $mahasiswa = auth()->guard('mahasiswa-guard')->user();
         $seminarPraProposal = $this->seminarPraProposal->create([
-            'title'         => 'SEMINAR PRA PROPSAL ' . strtoupper($mahasiswa->name),
+            'title'         => 'SEMINAR PRA PROPOSAL ' . strtoupper($mahasiswa->name),
             'status'        => $this->seminarPraProposal::STATUS_PROPOSED,
             'proposed_at'   => now(),
             'date'          => now(),

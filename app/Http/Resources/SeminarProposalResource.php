@@ -24,6 +24,7 @@ class SeminarProposalResource extends JsonResource
             'id' => $this->lecture?->id,
             'name' => $this->lecture?->name,
         ] : null;
+
         $lecture = $this->lecture ? [
             'id' => $this->lecture?->id,
             'name' => $this->lecture?->name,
@@ -31,21 +32,22 @@ class SeminarProposalResource extends JsonResource
 
         return [
             'id'         => $this->id,
-            'title'            => $this->title,
-            'status'            => $this->status,
+            'title'      => $this->title,
+            'status'     => $this->status,
             'date'       => $this->date?->format('c'),
-            'pic'            => $lecture,      
+            'pic'        => $lecture,
 
-            'proposedAt'    => $this->proposed_at?->format('c'),
-            'inReviewAt'    => $this->in_review_at?->format('c'),
-            'approvedAt'    => $this->approved_at?->format('c'),
-            'declinedAt'    => $this->declined_at?->format('c'),
-            'drafPro'  => $this->draf_pro ? url('/') . '/storage/' . $this->draf_pro : null,
-            'proPpt'  => $this->pro_ppt ? url('/') . '/storage/' . $this->pro_ppt : null,
+            'proposedAt' => $this->proposed_at?->format('c'),
+            'inReviewAt' => $this->in_review_at?->format('c'),
+            'approvedAt' => $this->approved_at?->format('c'),
+            'declinedAt' => $this->declined_at?->format('c'),
+            'drafPro'    => $this->draf_pro ? url('/') . '/storage/' . $this->draf_pro : null,
+            'proPpt'     => $this->pro_ppt ? url('/') . '/storage/' . $this->pro_ppt : null,
             'dokPersetujuanPro'  => $this->dok_persetujuan_pro ? url('/') . '/storage/' . $this->dok_persetujuan_pro : null,
-               
-            'mahasiswa'         => $mahasiswa,
-            'approvalBy'        => $approvalBy,
+            'note'      => $this->note,
+
+            'mahasiswa'   => $mahasiswa,
+            'approvalBy'  => $approvalBy,
             'createdAt'   => $this->created_at?->format('c'),
             'updatedAt'   => $this->updated_at?->format('c'),
         ];
