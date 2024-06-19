@@ -50,7 +50,7 @@ class SidangMejaHijauRepository
 
         $mahasiswa = auth()->guard('mahasiswa-guard')->user();
         $sidangMejaHijau = $this->sidangMejaHijau->create([
-            'title'         => 'SEMINAR PROPOSAL ' . strtoupper($mahasiswa->name),
+            'title'         => 'SIDANG MEJA HIJAU ' . strtoupper($mahasiswa->name),
             'status'        => $this->sidangMejaHijau::STATUS_PROPOSED,
             'proposed_at'   => now(),
             'date'          => now(),
@@ -58,7 +58,7 @@ class SidangMejaHijauRepository
             'dok_persetujuan_sidang_meja_hijau'  => $path_dok_persetujuan_sidang_meja_hijau ?? null,
         ]);
 
-        Logging::log("CREATE SEMINAR PROPOSAL", $sidangMejaHijau);
+        Logging::log("CREATE SIDANG MEJA HIJAU", $sidangMejaHijau);
         return $sidangMejaHijau;
     }
 
