@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Dosen;
 
 use App\Models\SeminarLiteratur;
+use App\Models\SeminarProyek;
 use Illuminate\Foundation\Http\FormRequest;
 
 class  SeminarProyekUpdateRequest extends FormRequest
@@ -25,12 +26,12 @@ class  SeminarProyekUpdateRequest extends FormRequest
     public function rules()
     {
         $status = [
-            SeminarLiteratur::STATUS_DECLINE,
-            SeminarLiteratur::STATUS_APPROVE,
+            SeminarProyek::STATUS_DECLINE,
+            SeminarProyek::STATUS_APPROVE,
         ];
         return [
             'status'    => ['sometimes', 'nullable', 'in:' . implode(',', $status)],
-            'note'      => ['required_if:status,' . SeminarLiteratur::STATUS_DECLINE, 'string'],
+            'note'      => ['required_if:status,' . SeminarProyek::STATUS_DECLINE, 'string'],
         ];
     }
 
