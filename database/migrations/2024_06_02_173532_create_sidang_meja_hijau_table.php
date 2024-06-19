@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('sidang_meja_hijau', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->tinyInteger('status')->nullable();
+            $table->string('status', 20)->nullable();
             $table->foreignId('pic')->nullable();
+            $table->text('note')->nullable();
             $table->string('dok_persetujuan_sidang_meja_hijau');
             $table->foreignId('mahasiswas_id');
-            $table->foreignId('approval_by');
+            $table->foreignId('approval_by')->nullable();
             $table->timestamp('proposed_at')->nullable();
             $table->timestamp('in_review_at')->nullable();
             $table->timestamp('approved_at')->nullable();
@@ -35,12 +36,17 @@ return new class extends Migration
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-                $table->foreign('approval_by')
+            $table->foreign('approval_by')
                 ->references('id')
                 ->on('lecture')
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
+            $table->foreign('pic')
+                ->references('id')
+                ->on('lecture')
+                ->restrictOnUpdate()
+                ->restrictOnDelete();
         });
     }
 
