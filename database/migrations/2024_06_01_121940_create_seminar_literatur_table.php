@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('check_in_ppt');
             $table->text('check_in_literatur');
             $table->text('note')->nullable();
-            $table->text('note')->nullable();
+            $table->foreignId('mahasiswas_id');
             $table->float('nilai_seminar_literatur');
-            $table->timestamps('tanggal_seminar_literatur');
+            $table->timestamp('tanggal_seminar_literatur');
             $table->foreignId('approval_by')->nullable();
             $table->timestamps();
 
