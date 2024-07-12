@@ -65,6 +65,8 @@ class SeminarProposal extends Model
         'draf_pro',
         'pro_ppt',
         'dok_persetujuan_pro',
+        'minar_proposal',
+        'tanggal_seminar_proposal',
         'mahasiswas_id',
         'approval_by',
         'proposed_at',

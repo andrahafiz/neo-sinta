@@ -61,6 +61,8 @@ class SeminarProyek extends Model
         'dok_per_sem_proyek',
         'mahasiswas_id',
         'note',
+        'nilai_seminar_proyek',
+        'tanggal_seminar_proyek',
         'proposed_at',
         'approved_at',
         'declined_at'

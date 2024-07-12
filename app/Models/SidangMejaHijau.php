@@ -59,6 +59,8 @@ class SidangMejaHijau extends Model
         'pic',
         'note',
         'dok_persetujuan_sidang_meja_hijau',
+        'nilai_sidang_meja_hijau',
+        'tanggal_sidang_meja_hijau',
         'mahasiswas_id',
         'approval_by',
         'proposed_at',

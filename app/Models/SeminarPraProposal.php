@@ -65,6 +65,8 @@ class SeminarPraProposal extends Model
         'draf_pra_pro',
         'pra_pro_ppt',
         'dok_persetujuan_pra_pro',
+        'nilai_seminar_pra_proposal',
+        'tanggal_seminar_pra_proposal',
         'mahasiswas_id',
         'note',
         'approval_by'

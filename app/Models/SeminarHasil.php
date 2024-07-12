@@ -69,6 +69,8 @@ class SeminarHasil extends Model
         'loa',
         'toefl',
         'note',
+        'nilai_seminar_hasil',
+        'tanggal_seminar_hasil',
         'plagiarisme',
         'mahasiswas_id',
         'approval_by',
