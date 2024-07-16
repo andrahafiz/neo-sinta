@@ -19,11 +19,11 @@ class UserResource extends JsonResource
             'name'        => $this->name,
             'username'    => $this->username,
             'email'       => $this->email,
-            'emailVerifiedAt' => $this->email_verified_at,
+            'email_verified_at' => $this->email_verified_at,
             'photo'       => $this->photo !== null && $this->photo != 'avatar.jpg' ? config('app.url') . '/storage/' . $this->photo : 'avatar.jpg',
             'roles'       => $this->roles,
-            'createdAt'   => $this->created_at?->format('c'),
-            'updatedAt'   => $this->updated_at?->format('c'),
+            'created_at'   => $this->created_at?->format('c'),
+            'updated_at'   => $this->updated_at?->format('c'),
         ];
     }
 }

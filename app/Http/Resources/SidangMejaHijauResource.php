@@ -34,19 +34,19 @@ class SidangMejaHijauResource extends JsonResource
             'id'         => $this->id,
             'title'      => $this->title,
             'status'     => $this->status,
-            'statusText' => $this->statusText,
+            'status_text' => $this->statusText,
             'pic'        => $lecture,
-            'dokPersetujuanSidangMejaHijau'  => $this->dok_persetujuan_sidang_meja_hijau ? url('/') . '/storage/' . $this->dok_persetujuan_sidang_meja_hijau : null,
+            'dok_persetujuan_sidang_meja_hijau'  => $this->dok_persetujuan_sidang_meja_hijau ? url('/') . '/storage/' . $this->dok_persetujuan_sidang_meja_hijau : null,
 
-            'proposedAt' => $this->proposed_at?->format('c'),
-            'approvedAt' => $this->approved_at?->format('c'),
-            'declinedAt' => $this->declined_at?->format('c'),
+            'proposed_at' => $this->proposed_at?->format('c'),
+            'approved_at' => $this->approved_at?->format('c'),
+            'declined_at' => $this->declined_at?->format('c'),
             'note'      => $this->note,
 
             'mahasiswa'   => $mahasiswa,
-            'approvalBy'  => $approvalBy,
-            'createdAt'   => $this->created_at?->format('c'),
-            'updatedAt'   => $this->updated_at?->format('c'),
+            'approval_by'  => $approvalBy,
+            'created_at'   => $this->created_at?->format('c'),
+            'updated_at'   => $this->updated_at?->format('c'),
         ];
     }
 }

@@ -34,21 +34,21 @@ class SeminarPraProposalResource extends JsonResource
             'date'       => $this->date?->format('c'),
             'title'      => $this->title,
             'status'     => $this->status,
-            'statusText' => $this->statusText,
+            'status_text' => $this->statusText,
             'pic'        => $lecture,
 
-            'proposedAt' => $this->proposed_at?->format('c'),
-            'approvedAt' => $this->approved_at?->format('c'),
-            'declinedAt' => $this->declined_at?->format('c'),
-            'drafPraPro' => $this->draf_pra_pro ? url('/') . '/storage/' . $this->draf_pra_pro : null,
-            'praProPpt'  => $this->pra_pro_ppt ? url('/') . '/storage/' . $this->pra_pro_ppt : null,
-            'dokPersetujuanPraPro'  => $this->dok_persetujuan_pra_pro ? url('/') . '/storage/' . $this->dok_persetujuan_pra_pro : null,
+            'proposed_at' => $this->proposed_at?->format('c'),
+            'approved_at' => $this->approved_at?->format('c'),
+            'declined_at' => $this->declined_at?->format('c'),
+            'draf_pra_pro' => $this->draf_pra_pro ? url('/') . '/storage/' . $this->draf_pra_pro : null,
+            'pra_pro_ppt'  => $this->pra_pro_ppt ? url('/') . '/storage/' . $this->pra_pro_ppt : null,
+            'ok_persetujuan_pra_pro'  => $this->dok_persetujuan_pra_pro ? url('/') . '/storage/' . $this->dok_persetujuan_pra_pro : null,
 
             'mahasiswa'   => $mahasiswa,
-            'approvalBy'  => $approvalBy,
+            'approval_by'  => $approvalBy,
             'note'        => $this->note,
-            'createdAt'   => $this->created_at?->format('c'),
-            'updatedAt'   => $this->updated_at?->format('c'),
+            'created_at'   => $this->created_at?->format('c'),
+            'updated_at'   => $this->updated_at?->format('c'),
         ];
     }
 }

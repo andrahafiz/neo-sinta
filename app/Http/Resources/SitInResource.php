@@ -31,15 +31,15 @@ class SitInResource extends JsonResource
             'checkIn'    => $this->check_in?->format('H:i'),
             'checkOut'   => $this->check_out?->format('H:i'),
             'duration'   => $this->duration ?? 0,
-            'checkInProof'      => $this->check_in_proof ? url('/') . '/storage/' . $this->check_in_proof : null,
-            'checkOutProof'     => $this->check_out_proof ? url('/') . '/storage/' . $this->check_out_proof : null,
-            'checkOutDocument'  => $this->check_out_document ? url('/') . '/storage/' . $this->check_out_document : null,
+            'check_in_proof'      => $this->check_in_proof ? url('/') . '/storage/' . $this->check_in_proof : null,
+            'check_out_proof'     => $this->check_out_proof ? url('/') . '/storage/' . $this->check_out_proof : null,
+            'check_out_document'  => $this->check_out_document ? url('/') . '/storage/' . $this->check_out_document : null,
             'status'            => $this->status,
-            'statusText'        => $this->status_text,
+            'status_text'        => $this->status_text,
             'mahasiswa'         => $mahasiswa,
-            'approvalBy'        => $approvalBy,
-            'createdAt'   => $this->created_at?->format('c'),
-            'updatedAt'   => $this->updated_at?->format('c'),
+            'approval_by'        => $approvalBy,
+            'created_at'   => $this->created_at?->format('c'),
+            'updated_at'   => $this->updated_at?->format('c'),
         ];
     }
 }

@@ -33,18 +33,18 @@ class SeminarLiteraturResource extends JsonResource
         return [
             'id'            => $this->id,
             'status'        => $this->status,
-            'statusText'    => $this->statusText,
+            'status_text'    => $this->statusText,
             'date'          => $this->date?->format('c'),
-            'filePPT'       => $this->check_in_ppt ? url('/') . '/storage/' . $this->check_in_ppt : null,
-            'fileLiteratur' => $this->check_in_literatur ? array_map(function ($item) {
+            'file_ppt'       => $this->check_in_ppt ? url('/') . '/storage/' . $this->check_in_ppt : null,
+            'file_literatur' => $this->check_in_literatur ? array_map(function ($item) {
                 return   url('/') . '/storage/' . $item;
             }, json_decode($this->check_in_literatur)) : null,
             'mahasiswa'     => $mahasiswa,
             'pic'           => $lecture,
-            'approvalBy'    => $approvalBy,
+            'approval_by'    => $approvalBy,
             'note'          => $this->note,
-            'createdAt'     => $this->created_at?->format('c'),
-            'updatedAt'     => $this->updated_at?->format('c'),
+            'created_at'     => $this->created_at?->format('c'),
+            'updated_at'     => $this->updated_at?->format('c'),
         ];
     }
 }

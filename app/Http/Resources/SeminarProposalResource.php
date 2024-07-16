@@ -34,22 +34,22 @@ class SeminarProposalResource extends JsonResource
             'id'         => $this->id,
             'title'      => $this->title,
             'status'     => $this->status,
-            'statusText'            => $this->statusText,
+            'status_text'            => $this->statusText,
             'date'       => $this->date?->format('c'),
             'pic'        => $lecture,
 
-            'proposedAt' => $this->proposed_at?->format('c'),
-            'approvedAt' => $this->approved_at?->format('c'),
-            'declinedAt' => $this->declined_at?->format('c'),
-            'drafPro'    => $this->draf_pro ? url('/') . '/storage/' . $this->draf_pro : null,
-            'proPpt'     => $this->pro_ppt ? url('/') . '/storage/' . $this->pro_ppt : null,
-            'dokPersetujuanPro'  => $this->dok_persetujuan_pro ? url('/') . '/storage/' . $this->dok_persetujuan_pro : null,
+            'proposed_at' => $this->proposed_at?->format('c'),
+            'approved_at' => $this->approved_at?->format('c'),
+            'declined_at' => $this->declined_at?->format('c'),
+            'draf_pro'    => $this->draf_pro ? url('/') . '/storage/' . $this->draf_pro : null,
+            'pro_ppt'     => $this->pro_ppt ? url('/') . '/storage/' . $this->pro_ppt : null,
+            'dok_persetujuan_pro'  => $this->dok_persetujuan_pro ? url('/') . '/storage/' . $this->dok_persetujuan_pro : null,
             'note'      => $this->note,
 
             'mahasiswa'   => $mahasiswa,
-            'approvalBy'  => $approvalBy,
-            'createdAt'   => $this->created_at?->format('c'),
-            'updatedAt'   => $this->updated_at?->format('c'),
+            'approval_by'  => $approvalBy,
+            'created_at'   => $this->created_at?->format('c'),
+            'updated_at'   => $this->updated_at?->format('c'),
         ];
     }
 }
