@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('dok_per_sem_proyek');
             $table->foreignId('mahasiswas_id');
             $table->float('nilai_seminar_proyek');
-            $table->timestamps('tanggal_seminar_proyek');
+            $table->timestamp('tanggal_seminar_proyek');
             $table->timestamp('proposed_at')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('declined_at')->nullable();

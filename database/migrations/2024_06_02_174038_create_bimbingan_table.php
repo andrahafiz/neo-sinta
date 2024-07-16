@@ -20,10 +20,11 @@ return new class extends Migration
             $table->timestamp('tanggal_bimbingan');
             $table->timestamp('approved_at')->nullable();
             $table->foreignId('mahasiswas_id');
-            $table->foreignId('dosen_pembimbing');
+            $table->foreignId('dosen_pembimbing1');
+            $table->foreignId('dosen_pembimbing2');
             $table->tinyInteger('status')->nullable();
-            $table->string('type');
-
+            $table->integer('bimbingaable_id');
+            $table->string('bimbingaable_type');
             $table->timestamps();
             $table->softDeletes();
 
@@ -33,12 +34,17 @@ return new class extends Migration
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-                $table->foreign('dosen_pembimbing')
+            $table->foreign('dosen_pembimbing1')
                 ->references('id')
                 ->on('lecture')
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
+            $table->foreign('dosen_pembimbing2')
+                ->references('id')
+                ->on('lecture')
+                ->restrictOnUpdate()
+                ->restrictOnDelete();
         });
     }
 
