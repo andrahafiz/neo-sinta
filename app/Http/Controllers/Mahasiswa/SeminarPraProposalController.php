@@ -84,7 +84,13 @@ class SeminarPraProposalController extends Controller
      */
     public function show(SeminarPraProposal $seminar_praproposal)
     {
-        $seminar_praproposal->load(['mahasiswa', 'lecture']);
+        $seminar_praproposal->load([
+            'mahasiswa',
+            'lecture',
+            'bimbingans',
+            'bimbingans.lecture',
+            'bimbingans.mahasiswa'
+        ]);
         return Response::json(new SeminarPraProposalResource($seminar_praproposal));
     }
 

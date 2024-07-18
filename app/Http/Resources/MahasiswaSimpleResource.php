@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DosenResource extends JsonResource
+class MahasiswaSimpleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,10 +18,8 @@ class DosenResource extends JsonResource
         return [
             'id'          => $this->id,
             'name'        => $this->name,
-            'nip'         => $this->nip,
+            'nim'         => $this->nim,
             'email'       => $this->email,
-            'is_active'   => $this->is_active,
-            'roles'       => $this->roles,
         ];
     }
 }

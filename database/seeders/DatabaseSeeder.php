@@ -9,6 +9,7 @@ use App\Models\Mahasiswa;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,6 +23,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Artisan::call('passport:install', ['--force' => true]);
+
         \App\Models\User::create([
             'name'              => 'ridho',
             'username'          => 'ridho',

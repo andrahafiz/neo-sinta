@@ -10,6 +10,7 @@ use App\Http\Controllers\Mahasiswa\PengajuanJudulController;
 use App\Http\Controllers\Mahasiswa\SeminarLiteraturController;
 use App\Http\Controllers\Mahasiswa\SeminarPraProposalController;
 use App\Http\Controllers\Mahasiswa\AuthController as MahasiswaAuthController;
+use App\Http\Controllers\Mahasiswa\BimbinganController;
 use App\Http\Controllers\Mahasiswa\SeminarHasilController;
 use App\Http\Controllers\Mahasiswa\SeminarProposalController;
 use App\Http\Controllers\Mahasiswa\SidangMejaHijauController;
@@ -37,6 +38,7 @@ Route::middleware(['auth:mahasiswa-guard', 'role:mahasiswa'])->group(function ()
     Route::post('sitin/checkout/{sitIn}', [SitInController::class, 'checkOut']);
 
     Route::apiResource('sitin', SitInController::class);
+    Route::apiResource('bimbingan', BimbinganController::class);
 
     Route::apiResource('pengajuan-judul', PengajuanJudulController::class);
     Route::apiResource('seminar-literatur', SeminarLiteraturController::class);

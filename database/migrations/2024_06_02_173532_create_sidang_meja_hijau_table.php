@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignId('pic')->nullable();
             $table->text('note')->nullable();
             $table->string('dok_persetujuan_sidang_meja_hijau');
-            $table->float('nilai_sidang_meja_hijau');
-            $table->timestamp('tanggal_sidang_meja_hijau');
+            $table->float('nilai_sidang_meja_hijau')->nullable();
+            $table->timestamp('tanggal_sidang_meja_hijau')->nullable();
             $table->foreignId('mahasiswas_id');
             $table->foreignId('approval_by')->nullable();
             $table->timestamp('proposed_at')->nullable();
