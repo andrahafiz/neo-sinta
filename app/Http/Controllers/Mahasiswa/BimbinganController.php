@@ -13,6 +13,7 @@ use App\Repositories\Mahasiswa\BimbinganRepository;
 use App\Http\Requests\Mahasiswa\BimbinganStoreRequest;
 use App\Http\Requests\Mahasiswa\BimbinganCheckInRequest;
 use App\Http\Requests\Mahasiswa\BimbinganCheckOutRequest;
+use Illuminate\Validation\ValidationException;
 
 class BimbinganController extends Controller
 {
@@ -51,7 +52,6 @@ class BimbinganController extends Controller
             ->with('mahasiswa')
             ->DataMahasiswa()
             ->Type(Bimbingan::SEMINAR_PRAPROPOSAL)
-            ->Approve()
             ->orderByDesc('created_at')
             ->paginate($request->query('show'));
 
@@ -102,6 +102,9 @@ class BimbinganController extends Controller
      */
     public function destroy(Request $request, Bimbingan $bimbingan)
     {
+        if ($bimbingan->approved_at != null)
+            throw ValidationException::withMessages(['message' => 'Bimbingan sudah di approve, tidak dapat dihapus']);
+
         $deletedBimbingan = DB::transaction(function () use ($request, $bimbingan) {
             $deletedBimbingan = $this->bimbingaRepository
                 ->delete($request, $bimbingan);

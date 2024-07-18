@@ -38,10 +38,16 @@ class DatabaseSeeder extends Seeder
             'roles'             => 'ADMIN'
         ]);
 
-        $mahasiswa = Mahasiswa::create([
+        $mahasiswa1 = Mahasiswa::create([
             'name'              => 'mahasiswa',
-            'nim'               => '12345',
+            'nim'               => '1111',
             'email'             => 'mahasiswa@gmail.com',
+            'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+        $mahasiswa2 = Mahasiswa::create([
+            'name'              => 'mahasiswa2',
+            'nim'               => '22222',
+            'email'             => 'mahasiswa2@gmail.com',
             'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
 
@@ -49,12 +55,27 @@ class DatabaseSeeder extends Seeder
 
         $role_mahasiswa = Role::create(['name' => 'mahasiswa', 'guard_name' => 'mahasiswa-guard']);
 
-        $mahasiswa->assignRole(['mahasiswa']);
+        $mahasiswa1->assignRole(['mahasiswa']);
+        $mahasiswa2->assignRole(['mahasiswa']);
 
         $dosen = Lecture::create([
             'name'              => 'dosen',
             'nip'               => '54321',
             'email'             => 'dosen@gmail.com',
+            'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+
+        $dosen1 = Lecture::create([
+            'name'              => 'dosen pem1',
+            'nip'               => '543211111',
+            'email'             => 'dosenpem1@gmail.com',
+            'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+
+        $dosen2 = Lecture::create([
+            'name'              => 'dosen pem2',
+            'nip'               => '54322222',
+            'email'             => 'dosenpem2@gmail.com',
             'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
 
@@ -65,10 +86,13 @@ class DatabaseSeeder extends Seeder
             'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
 
-        $role_dosen     = Role::create(['name' => 'dosen', 'guard_name' => 'dosen-guard']);
-        $role_kaprodi   = Role::create(['name' => 'kaprodi', 'guard_name' => 'dosen-guard']);
+        $role_dosen             = Role::create(['name' => 'dosen', 'guard_name' => 'dosen-guard']);
+        $role_kaprodi           = Role::create(['name' => 'kaprodi', 'guard_name' => 'dosen-guard']);
+        $role_dosen_pembimbing  = Role::create(['name' => 'dosen_pembimbing', 'guard_name' => 'dosen-guard']);
 
         $dosen->assignRole(['dosen']);
+        $dosen1->assignRole(['dosen', 'dosen_pembimbing']);
+        $dosen2->assignRole(['dosen', 'dosen_pembimbing']);
         $kaprodi->assignRole(['dosen', 'kaprodi']);
     }
 }
