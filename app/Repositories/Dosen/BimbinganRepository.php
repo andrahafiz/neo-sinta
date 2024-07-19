@@ -5,8 +5,8 @@ namespace App\Repositories\Dosen;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Log;
-use App\Models\Bimbingan;
 use App\Models\Product;
+use App\Models\Bimbingan;
 use App\Contracts\Logging;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -16,9 +16,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\BimbinganCreateRequest;
 use App\Http\Requests\BimbinganUpdateRequest;
-use App\Repositories\Interface\BimbinganInterface;
-use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Dosen\BimbinganRequest;
+use Illuminate\Validation\ValidationException;
+use App\Repositories\Interface\BimbinganInterface;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class BimbinganRepository
@@ -52,10 +53,12 @@ class BimbinganRepository
      * @param  Request  $request
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function approve(Request $request, Bimbingan $bimbingan)
+    public function approve(Bimbingan $bimbingan)
     {
+        if ($bimbingan->dosen_pembimbing != auth()->user()->id)
+            throw new UnauthorizedException(403, 'Unauthorized');
 
-        $bimbingan = $bimbingan->update([
+        $bimbingan->update([
             'approved_at' => now(),
         ]);
 

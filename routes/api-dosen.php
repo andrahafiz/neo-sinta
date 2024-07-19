@@ -14,6 +14,7 @@ use App\Http\Controllers\Dosen\SeminarProposalController;
 use App\Http\Controllers\Dosen\SeminarLiteraturController;
 use App\Http\Controllers\Dosen\SeminarPraProposalController;
 use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
+use App\Http\Controllers\Dosen\BimbinganController;
 use App\Http\Controllers\Dosen\SidangMejaHijauController;
 use App\Models\SidangMejaHijau;
 
@@ -57,6 +58,9 @@ Route::middleware(['auth:dosen-guard', 'role:dosen|kaprodi'])->group(function ()
 
     Route::put('sidang-meja-hijau/{sidang_meja_hijau}/confirm', [SidangMejaHijauController::class, 'confirm']);
     Route::apiResource('sidang-meja-hijau', SidangMejaHijauController::class)->only(['index', 'show']);
+
+    Route::put('bimbingan/{bimbingan}/approve', [BimbinganController::class, 'approve']);
+    Route::apiResource('bimbingan', BimbinganController::class);
 });
 
-Route::put('approve/bimbingan/{bimbingan}',[BimbinganController::class, 'approve']);
+// Route::put('approve/bimbingan/{bimbingan}', [BimbinganController::class, 'approve']);

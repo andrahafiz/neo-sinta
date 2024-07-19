@@ -23,6 +23,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class Lecture
@@ -50,7 +51,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @package App\Models
  */
-class Lecture extends Model
+class Lecture extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens, HasRoles, SoftDeletes;
     protected $table = 'lecture';
