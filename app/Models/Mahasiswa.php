@@ -61,4 +61,6 @@ class Mahasiswa  extends Authenticatable
     {
         return $this->hasMany(Sitin::class, 'mahasiswas_id');
     }
+
+
 }

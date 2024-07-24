@@ -2,21 +2,22 @@
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\SidangMejaHijau;
 use App\Models\SeminarLiteratur;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dosen\MeController;
 use App\Http\Controllers\Dosen\UserController;
 use App\Http\Controllers\Dosen\SitInController;
+use App\Http\Controllers\Dosen\BimbinganController;
+use App\Http\Controllers\Dosen\ThesisController;
 use App\Http\Controllers\Dosen\SeminarHasilController;
 use App\Http\Controllers\Dosen\SeminarProyekController;
 use App\Http\Controllers\Dosen\PengajuanJudulController;
 use App\Http\Controllers\Dosen\SeminarProposalController;
+use App\Http\Controllers\Dosen\SidangMejaHijauController;
 use App\Http\Controllers\Dosen\SeminarLiteraturController;
 use App\Http\Controllers\Dosen\SeminarPraProposalController;
 use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
-use App\Http\Controllers\Dosen\BimbinganController;
-use App\Http\Controllers\Dosen\SidangMejaHijauController;
-use App\Models\SidangMejaHijau;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,4 +64,7 @@ Route::middleware(['auth:dosen-guard', 'role:dosen|kaprodi'])->group(function ()
     Route::apiResource('bimbingan', BimbinganController::class);
 });
 
-// Route::put('approve/bimbingan/{bimbingan}', [BimbinganController::class, 'approve']);
+Route::middleware(['auth:dosen-guard', 'role:kaprodi'])->group(function () {
+    Route::get('/thesis', [ThesisController::class, 'index']);
+    Route::post('/pembimbing-assign', [ThesisController::class, 'assign_pembimbing']);
+});

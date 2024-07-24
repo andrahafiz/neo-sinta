@@ -36,7 +36,7 @@ class BimbinganController extends Controller
             // Jika role kaprodi, tampilkan semua data bimbingan
             $bimbingans = $query->orderByDesc('created_at')->paginate($request->query('show'));
         } else if ($user->hasRole('dosen_pembimbing')) {
-            // Jika role dosen pembimbing, tampilkan hanya data bimbingan milik dosen tersebut
+            // Jika role dosen pembimbing, tx`ampilkan hanya data bimbingan milik dosen tersebut
             $query->whereHas('lecture', function ($q) use ($user) {
                 $q->where('id', $user->id);
             });

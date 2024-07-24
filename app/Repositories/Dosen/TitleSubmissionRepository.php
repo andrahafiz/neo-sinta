@@ -32,36 +32,6 @@ class TitleSubmissionRepository
     }
 
     /**
-     * @param  \App\Http\Requests\TitleSubmissionStoreRequest  $request
-     * @return \App\Models\TitleSubmission
-     */
-    public function store(TitleSubmissionStoreRequest $request)
-    {
-        $input = $request->safe([
-            'title', 'dok_pengajuan_judul', 'konsentrasi_ilmu'
-        ]);
-
-        $document = $request->file('dok_pengajuan_judul');
-        if ($document instanceof UploadedFile) {
-            $rawPath = $document->store('public/dokumen/pengajuan_judul');
-            $path = str_replace('public/', '', $rawPath);
-        }
-
-        $mahasiswa = auth()->guard('mahasiswa-guard')->user()->id;
-        $submission = $this->titleSubmission->create([
-            'title'         => $input['title'],
-            'status'        => $this->titleSubmission::STATUS_PROPOSED,
-            'proposed_at'   => now(),
-            'mahasiswas_id' => $mahasiswa,
-            'konsentrasi_ilmu'      => $input['konsentrasi_ilmu'],
-            'dok_pengajuan_judul'   => $path ?? null,
-        ]);
-
-        Logging::log("CREATE PRODUCT", $submission);
-        return $submission;
-    }
-
-    /**
      * @param  \App\Http\Requests\TitleSubmissionUpdateRequest  $request
      * @param  \App\Models\TitleSubmission  $pengajuan_judul
      * @return \App\Models\TitleSubmission
@@ -85,14 +55,4 @@ class TitleSubmissionRepository
         return $pengajuan_judul;
     }
 
-    /**
-     * @param  \App\Models\TitleSubmission  $pengajuan_judul
-     * @return \App\Models\TitleSubmission
-     */
-    public function delete(TitleSubmission $pengajuan_judul): bool
-    {
-        Logging::log("DELETE PRODUCT", $pengajuan_judul);
-        $pengajuan_judul = $pengajuan_judul->delete();
-        return $pengajuan_judul;
-    }
 }
