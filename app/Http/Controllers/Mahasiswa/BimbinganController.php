@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers\Mahasiswa;
 
+use App\Models\Thesis;
 use App\Models\Bimbingan;
 use App\Contracts\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 use App\Http\Resources\BimbinganResource;
 use App\Http\Resources\BimbinganCollection;
+use Illuminate\Validation\ValidationException;
 use App\Repositories\Mahasiswa\BimbinganRepository;
 use App\Http\Requests\Mahasiswa\BimbinganStoreRequest;
 use App\Http\Requests\Mahasiswa\BimbinganCheckInRequest;
 use App\Http\Requests\Mahasiswa\BimbinganCheckOutRequest;
-use Illuminate\Validation\ValidationException;
 
 class BimbinganController extends Controller
 {
@@ -48,14 +51,22 @@ class BimbinganController extends Controller
      */
     public function index(Request $request)
     {
-        $bimbingaes = $this->bimbinganModel
-            ->with('mahasiswa')
-            ->DataMahasiswa()
-            ->Type(Bimbingan::SEMINAR_PRAPROPOSAL)
-            ->orderByDesc('created_at')
-            ->paginate($request->query('show'));
+        // $bimbingan = $this->bimbinganModel
+        //     ->with('mahasiswa')
+        //     ->Type(Bimbingan::SEMINAR_PRAPROPOSAL)
+        //     ->orderByDesc('created_at')
+        //     ->dataMahasiswa()
+        //     ->paginate($request->query('show'));
+        $bimbingan = QueryBuilder::for(Bimbingan::class)
+            ->allowedFilters([
+                AllowedFilter::partial('mahasiswa', 'mahasiswa.name'),
+                'bimbingan_type'
+            ])
+            ->dataMahasiswa()
+            ->orderBy('created_at', 'desc')
+            ->paginate($request->query('show', 15)); // Default pagination to 15 if not provided
 
-        return Response::json(new BimbinganCollection($bimbingaes));
+        return Response::json(new BimbinganCollection($bimbingan));
     }
 
     /**

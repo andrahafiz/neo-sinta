@@ -21,7 +21,8 @@ class MahasiswaResource extends JsonResource
             'nim'         => $this->nim,
             'email'       => $this->email,
             'is_active'   => $this->is_active,
-            'roles'       => $this->roles,
+            'theses'    => new ThesisResource($this->whenLoaded('theses'))
+            // 'roles'       => $this->roles,
         ];
     }
 }

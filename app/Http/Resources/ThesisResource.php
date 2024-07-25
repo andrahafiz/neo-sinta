@@ -17,6 +17,9 @@ class ThesisResource extends JsonResource
     {
         return [
             'id'                => $this->id,
+            'judul_thesis'      => $this->judul_thesis,
+            'konsentrasi_ilmu'  => $this->konsentrasi_ilmu,
+            'deskripsi'         => $this->deskripsi,
             'mahasiswa'         => new MahasiswaSimpleResource($this->mahasiswa),
             'pembimbing_1'      => new DosenSimpleResource($this->pembimbing1),
             'pembimbing_2'      => new DosenSimpleResource($this->pembimbing2),

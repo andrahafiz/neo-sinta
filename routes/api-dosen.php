@@ -18,6 +18,7 @@ use App\Http\Controllers\Dosen\SidangMejaHijauController;
 use App\Http\Controllers\Dosen\SeminarLiteraturController;
 use App\Http\Controllers\Dosen\SeminarPraProposalController;
 use App\Http\Controllers\Dosen\AuthController as DosenAuthController;
+use App\Http\Controllers\Dosen\MahasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,8 @@ Route::post('/login', [DosenAuthController::class, 'login']);
 Route::middleware(['auth:dosen-guard', 'role:dosen|kaprodi'])->group(function () {
     Route::post('logout', [DosenAuthController::class, 'logout']);
     Route::get('/me', MeController::class);
+
+    Route::apiResource('mahasiswa', MahasiswaController::class)->only(['index', 'update', 'confirm', 'show']);
 
     Route::put('sitin/confirm', [SitInController::class, 'confirm']);
     Route::apiResource('sitin', SitInController::class)->only(['index', 'update', 'confirm', 'show']);
