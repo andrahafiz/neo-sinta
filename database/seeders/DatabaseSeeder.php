@@ -25,18 +25,14 @@ class DatabaseSeeder extends Seeder
     {
         Artisan::call('passport:install', ['--force' => true]);
 
-        \App\Models\User::create([
-            'name'              => 'ridho',
-            'username'          => 'ridho',
-            'email'             => 'ridho@gmail.com',
-            'email_verified_at' => now(),
+        $role_dosen             = Role::create(['name' => 'admin']);
+        $admin = \App\Models\User::create([
+            'name'              => 'admin',
+            'email'             => 'admin@gmail.com',
             'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token'    => Str::random(10),
-            'phone_number'      => '0877231244312',
-            'address'           => 'Rumbai, Pekanbaru',
-            'photo'             => 'avatar.jpg',
-            'roles'             => 'ADMIN'
         ]);
+
+        $admin->assignRole(['admin']);
 
         $mahasiswa1 = Mahasiswa::create([
             'name'              => 'mahasiswa',

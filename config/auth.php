@@ -49,9 +49,8 @@ return [
             'provider' => 'dosen',
         ],
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
-            'hash' => false,
         ]
     ],
 
