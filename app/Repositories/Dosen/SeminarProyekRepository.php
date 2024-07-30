@@ -40,7 +40,7 @@ class SeminarProyekRepository
      */
     public function confirm(SeminarProyekUpdateRequest $request, SeminarProyek $seminar_proyek)
     {
-        $input = $request->safe(['status', 'note']);
+        $input = $request->safe(['status', 'note', 'tanggal_seminar_proyek']);
         $userId = auth()->user()->id;
         $status = $input['status'] ?? $seminar_proyek->status;
         $now = now();
@@ -50,6 +50,7 @@ class SeminarProyekRepository
             'pic'         => $userId,
             'approval_by' => $userId,
             'note'        => $input['note'] ?? $seminar_proyek->note,
+            'tanggal_seminar_proyek' => $input['tanggal_seminar_proyek'],
             'approved_at' => $status == SeminarProyek::STATUS_APPROVE ? $now : null,
             'declined_at' => $status == SeminarProyek::STATUS_DECLINE ? $now : null,
         ]);

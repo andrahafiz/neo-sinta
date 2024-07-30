@@ -45,7 +45,7 @@ class SeminarProposalResource extends JsonResource
             'pro_ppt'     => $this->pro_ppt ? url('/') . '/storage/' . $this->pro_ppt : null,
             'dok_persetujuan_pro'  => $this->dok_persetujuan_pro ? url('/') . '/storage/' . $this->dok_persetujuan_pro : null,
             'note'      => $this->note,
-
+            'tanggal_seminar_proposal' => $this->whenNotNull($this->tanggal_seminar_proposal),
             'mahasiswa'   => $mahasiswa,
             'approval_by'  => $approvalBy,
             'created_at'   => $this->created_at?->format('c'),

@@ -31,6 +31,7 @@ class  SeminarPraProposalUpdateRequest extends FormRequest
         return [
             'status'    => ['sometimes', 'nullable', 'in:' . implode(',', $status)],
             'note'      => ['required_if:status,' . SeminarPraProposal::STATUS_DECLINE, 'string'],
+            'tanggal_seminar_pra_proposal'      => ['required_if:status,' . SeminarPraProposal::STATUS_APPROVE, 'date_format:Y-m-d H:i'],
         ];
     }
 

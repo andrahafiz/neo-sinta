@@ -32,6 +32,7 @@ class  SeminarProyekUpdateRequest extends FormRequest
         return [
             'status'    => ['sometimes', 'nullable', 'in:' . implode(',', $status)],
             'note'      => ['required_if:status,' . SeminarProyek::STATUS_DECLINE, 'string'],
+            'tanggal_seminar_proyek'      => ['required_if:status,' . SeminarProyek::STATUS_APPROVE, 'date_format:Y-m-d H:i'],
         ];
     }
 
