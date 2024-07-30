@@ -40,7 +40,7 @@ class SeminarLiteraturRepository
      */
     public function confirm(SeminarLiteraturUpdateRequest $request, SeminarLiteratur $seminar_literatur)
     {
-        $input = $request->safe(['status', 'note']);
+        $input = $request->safe(['status', 'note', 'tanggal_seminar_literatur']);
         $userId = auth()->user()->id;
         $status = $input['status'] ?? $seminar_literatur->status;
         $now = now();
@@ -49,6 +49,7 @@ class SeminarLiteraturRepository
             'status'      => $status,
             'pic'         => $userId,
             'approval_by' => $userId,
+            'tanggal_seminar_literatur' => $input['tanggal_seminar_literatur'],
             'note'        => $input['note'] ?? $seminar_literatur->note,
             'approved_at' => $status == SeminarLiteratur::STATUS_APPROVE ? $now : null,
             'declined_at' => $status == SeminarLiteratur::STATUS_DECLINE ? $now : null,

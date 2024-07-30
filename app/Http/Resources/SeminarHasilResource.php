@@ -49,7 +49,7 @@ class SeminarHasilResource extends JsonResource
             'plagiarisme'  => $this->plagiarisme ? url('/') . '/storage/' . $this->plagiarisme : null,
             'note' => $this->note,
             'mahasiswa'         => $mahasiswa,
-            'approval_by'        => $approval_by,
+            'approval_by'        => $approvalBy,
             'created_at'   => $this->created_at?->format('c'),
             'updated_at'   => $this->updated_at?->format('c'),
         ];

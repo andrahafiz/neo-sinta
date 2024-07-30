@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Mahasiswa;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DosenResource extends JsonResource
+class DosenSimpleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,8 +19,6 @@ class DosenResource extends JsonResource
             'name'        => $this->name,
             'nip'         => $this->nip,
             'email'       => $this->email,
-            'is_active'   => $this->is_active,
-            'roles'       => $this->roles,
         ];
     }
 }

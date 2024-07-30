@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('draf_pra_pro');
             $table->string('pra_pro_ppt');
             $table->string('dok_persetujuan_pra_pro');
-            $table->float('nilai_seminar_pra_proposal');
-            $table->timestamp('tanggal_seminar_pra_proposal');
+            $table->float('nilai_seminar_pra_proposal')->nullable();
+            $table->timestamp('tanggal_seminar_pra_proposal')->nullable();
             $table->foreignId('mahasiswas_id');
             $table->text('note')->nullable();
             $table->foreignId('approval_by')->nullable();

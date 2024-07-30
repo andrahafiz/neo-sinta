@@ -18,10 +18,11 @@ class MahasiswaResource extends JsonResource
         return [
             'id'          => $this->id,
             'name'        => $this->name,
+            'nim'         => $this->nim,
             'email'       => $this->email,
-            'password'    => $this->password,
             'is_active'   => $this->is_active,
-            'roles'       => $this->roles,
+            'theses'    => new ThesisResource($this->whenLoaded('theses'))
+            // 'roles'       => $this->roles,
         ];
     }
 }

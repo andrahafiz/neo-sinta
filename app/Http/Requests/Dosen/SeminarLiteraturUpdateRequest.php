@@ -31,6 +31,7 @@ class  SeminarLiteraturUpdateRequest extends FormRequest
         return [
             'status'    => ['sometimes', 'nullable', 'in:' . implode(',', $status)],
             'note'      => ['required_if:status,' . SeminarLiteratur::STATUS_DECLINE, 'string'],
+            'tanggal_seminar_literatur'      => ['required_if:status,' . SeminarLiteratur::STATUS_APPROVE, 'date_format:Y-m-d H:i'],
         ];
     }
 

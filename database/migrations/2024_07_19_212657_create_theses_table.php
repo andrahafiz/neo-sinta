@@ -13,22 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sidang_meja_hijau', function (Blueprint $table) {
+        Schema::create('theses', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('status', 20)->nullable();
-            $table->foreignId('pic')->nullable();
-            $table->text('note')->nullable();
-            $table->string('dok_persetujuan_sidang_meja_hijau');
-            $table->float('nilai_sidang_meja_hijau')->nullable();
-            $table->timestamp('tanggal_sidang_meja_hijau')->nullable();
+            $table->string('judul_thesis');
+            $table->string('konsentrasi_ilmu');
+            $table->text('deskripsi');
             $table->foreignId('mahasiswas_id');
-            $table->foreignId('approval_by')->nullable();
-            $table->timestamp('proposed_at')->nullable();
-            $table->timestamp('in_review_at')->nullable();
-            $table->timestamp('approved_at')->nullable();
-            $table->timestamp('declined_at')->nullable();
-
+            $table->foreignId('pembimbing_1');
+            $table->foreignId('pembimbing_2');
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
             $table->softDeletes();
 
@@ -38,13 +31,13 @@ return new class extends Migration
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-            $table->foreign('approval_by')
+            $table->foreign('pembimbing_1')
                 ->references('id')
                 ->on('lecture')
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-            $table->foreign('pic')
+            $table->foreign('pembimbing_2')
                 ->references('id')
                 ->on('lecture')
                 ->restrictOnUpdate()
@@ -59,6 +52,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sidang_meja_hijau');
+        Schema::dropIfExists('pembimbing');
     }
 };

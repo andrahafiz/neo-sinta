@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('loa');
             $table->string('toefl');
             $table->string('plagiarisme');
-            $table->float('nilai_seminar_hasil');
-            $table->timestamp('tanggal_seminar_hasil');
+            $table->float('nilai_seminar_hasil')->nullable();
+            $table->timestamp('tanggal_seminar_hasil')->nullable();
             $table->foreignId('mahasiswas_id');
             $table->foreignId('approval_by')->nullable();
             $table->timestamp('proposed_at')->nullable();

@@ -16,15 +16,14 @@ return new class extends Migration
         Schema::create('bimbingan', function (Blueprint $table) {
             $table->id();
             $table->string('pembahasan');
-            $table->tinyInteger('catatan')->nullable();
+            $table->string('catatan')->nullable();
             $table->timestamp('tanggal_bimbingan');
             $table->timestamp('approved_at')->nullable();
             $table->foreignId('mahasiswas_id');
-            $table->foreignId('dosen_pembimbing1');
-            $table->foreignId('dosen_pembimbing2');
+            $table->string('type_pembimbing');
+            $table->foreignId('dosen_pembimbing');
             $table->tinyInteger('status')->nullable();
-            $table->integer('bimbingaable_id');
-            $table->string('bimbingaable_type');
+            $table->string('bimbingan_type');
             $table->timestamps();
             $table->softDeletes();
 
@@ -34,13 +33,7 @@ return new class extends Migration
                 ->restrictOnUpdate()
                 ->restrictOnDelete();
 
-            $table->foreign('dosen_pembimbing1')
-                ->references('id')
-                ->on('lecture')
-                ->restrictOnUpdate()
-                ->restrictOnDelete();
-
-            $table->foreign('dosen_pembimbing2')
+            $table->foreign('dosen_pembimbing')
                 ->references('id')
                 ->on('lecture')
                 ->restrictOnUpdate()

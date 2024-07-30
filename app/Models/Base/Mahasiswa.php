@@ -4,11 +4,12 @@
  * Created by Reliese Model.
  */
 
-namespace App\Models;
+namespace App\Models\Base;
 
 use Carbon\Carbon;
 use App\Models\Sitin;
 use App\Models\Bimbingan;
+use App\Models\Base\Thesis;
 use App\Models\SeminarHasil;
 use App\Models\SeminarProyek;
 use App\Models\SeminarProposal;
@@ -25,12 +26,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
 /**
- * Class Lecture
+ * Class Mahasiswa
  *
  * @property int $id
  * @property string $name
- * @property string|null $nip
+ * @property string|null $nim
  * @property string $email
  * @property string $password
  * @property bool $is_active
@@ -47,14 +49,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property Collection|SeminarProyek[] $seminar_proyeks
  * @property Collection|SidangMejaHijau[] $sidang_meja_hijaus
  * @property Collection|Sitin[] $sitins
+ * @property Collection|Thesis[] $theses
  * @property Collection|TitleSubmission[] $title_submissions
  *
- * @package App\Models
+ * @package App\Models\Base
  */
-class Lecture extends Authenticatable
+class Mahasiswa extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens, HasRoles, SoftDeletes;
-    protected $table = 'lecture';
+    protected $table = 'mahasiswas';
 
     protected $casts = [
         'is_active' => 'bool'
@@ -65,57 +68,58 @@ class Lecture extends Authenticatable
         'remember_token'
     ];
 
-    protected $fillable = [
-        'name',
-        'nip',
-        'email',
-        'password',
-        'is_active',
-        'remember_token'
-    ];
-
-    public function mahasiswa_bimbingan()
+    public function bimbingans()
     {
-        return $this->hasMany(Bimbingan::class, 'dosen_pembimbing');
+        return $this->hasMany(Bimbingan::class, 'mahasiswas_id');
     }
 
     public function seminar_hasils()
     {
-        return $this->hasMany(SeminarHasil::class, 'approval_by');
+        return $this->hasMany(SeminarHasil::class, 'mahasiswas_id');
     }
 
     public function seminar_literaturs()
     {
-        return $this->hasMany(SeminarLiteratur::class, 'pic');
+        return $this->hasMany(SeminarLiteratur::class, 'mahasiswas_id');
     }
 
     public function seminar_pra_proposals()
     {
-        return $this->hasMany(SeminarPraProposal::class, 'approval_by');
+        return $this->hasMany(SeminarPraProposal::class, 'mahasiswas_id');
     }
 
     public function seminar_proposals()
     {
-        return $this->hasMany(SeminarProposal::class, 'pic');
+        return $this->hasMany(SeminarProposal::class, 'mahasiswas_id');
     }
 
     public function seminar_proyeks()
     {
-        return $this->hasMany(SeminarProyek::class, 'pic');
+        return $this->hasMany(SeminarProyek::class, 'mahasiswas_id');
     }
 
     public function sidang_meja_hijaus()
     {
-        return $this->hasMany(SidangMejaHijau::class, 'pic');
+        return $this->hasMany(SidangMejaHijau::class, 'mahasiswas_id');
     }
 
     public function sitins()
     {
-        return $this->hasMany(Sitin::class, 'approval_by');
+        return $this->hasMany(Sitin::class, 'mahasiswas_id');
+    }
+
+    public function theses()
+    {
+        return $this->hasOne(Thesis::class, 'mahasiswas_id')->active();
+    }
+
+    public function theses_history()
+    {
+        return $this->hasMany(Thesis::class, 'mahasiswas_id');
     }
 
     public function title_submissions()
     {
-        return $this->hasMany(TitleSubmission::class, 'pic');
+        return $this->hasMany(TitleSubmission::class, 'mahasiswas_id');
     }
 }
