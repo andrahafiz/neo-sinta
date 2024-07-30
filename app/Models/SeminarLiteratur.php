@@ -29,6 +29,7 @@ class SeminarLiteratur extends Model
     protected $casts = [
         'status' => 'string',
         'date' => 'datetime',
+        'tanggal_seminar_literatur' => 'datetime',
         'pic' => 'int',
         'check_in_ppt' => 'string',
         'check_in_literatur' => 'string',
@@ -48,6 +49,12 @@ class SeminarLiteratur extends Model
         'mahasiswas_id',
         'approval_by'
     ];
+
+    public function getTanggalSeminarLiteraturAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['tanggal_seminar_literatur'])
+            ->isoFormat('dddd, D MMMM Y HH:mm');
+    }
 
     public function lecture()
     {

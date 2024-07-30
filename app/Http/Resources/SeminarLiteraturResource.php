@@ -40,6 +40,7 @@ class SeminarLiteraturResource extends JsonResource
                 return   url('/') . '/storage/' . $item;
             }, json_decode($this->check_in_literatur)) : null,
             'mahasiswa'     => $mahasiswa,
+            'tanggal_seminar_literatur' => $this->whenNotNull($this->tanggal_seminar_literatur),
             'pic'           => $lecture,
             'approval_by'    => $approvalBy,
             'note'          => $this->note,
