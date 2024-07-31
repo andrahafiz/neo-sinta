@@ -32,7 +32,7 @@ class SeminarProyekResource extends JsonResource
             'status_text'     => $this->statusText,
             'date'       => $this->date?->format('c'),
             'pic'        => $lecture,
-
+            'tanggal_seminar_proyek' => $this->whenNotNull($this->tanggal_seminar_proyek),
             'proposed_at' => $this->proposed_at?->format('c'),
             'approved_at' => $this->approved_at?->format('c'),
             'declined_at' => $this->declined_at?->format('c'),

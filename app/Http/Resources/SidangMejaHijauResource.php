@@ -37,7 +37,7 @@ class SidangMejaHijauResource extends JsonResource
             'status_text' => $this->statusText,
             'pic'        => $lecture,
             'dok_persetujuan_sidang_meja_hijau'  => $this->dok_persetujuan_sidang_meja_hijau ? url('/') . '/storage/' . $this->dok_persetujuan_sidang_meja_hijau : null,
-
+            'tanggal_sidang_meja_hijau' => $this->whenNotNull($this->tanggal_sidang_meja_hijau),
             'proposed_at' => $this->proposed_at?->format('c'),
             'approved_at' => $this->approved_at?->format('c'),
             'declined_at' => $this->declined_at?->format('c'),

@@ -48,6 +48,7 @@ class SeminarHasilResource extends JsonResource
             'toefl'  => $this->toefl ? url('/') . '/storage/' . $this->toefl : null,
             'plagiarisme'  => $this->plagiarisme ? url('/') . '/storage/' . $this->plagiarisme : null,
             'note' => $this->note,
+            'tanggal_seminar_hasil' => $this->whenNotNull($this->tanggal_seminar_hasil),
             'mahasiswa'         => $mahasiswa,
             'approval_by'        => $approvalBy,
             'created_at'   => $this->created_at?->format('c'),

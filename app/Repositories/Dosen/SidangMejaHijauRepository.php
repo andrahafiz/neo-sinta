@@ -40,7 +40,7 @@ class SidangMejaHijauRepository
      */
     public function confirm(SidangMejaHijauUpdateRequest $request, SidangMejaHijau $sidang_meja_hijau)
     {
-        $input = $request->safe(['status', 'note']);
+        $input = $request->safe(['status', 'note', 'tanggal_sidang_meja_hijau']);
         $userId = auth()->user()->id;
         $status = $input['status'] ?? $sidang_meja_hijau->status;
         $now = now();
@@ -49,6 +49,7 @@ class SidangMejaHijauRepository
             'status'      => $status,
             'pic'         => $userId,
             'approval_by' => $userId,
+            'tanggal_sidang_meja_hijau' => $input['tanggal_sidang_meja_hijau'],
             'note'        => $input['note'] ?? $sidang_meja_hijau->note,
             'approved_at' => $status == SidangMejaHijau::STATUS_APPROVE ? $now : null,
             'declined_at' => $status == SidangMejaHijau::STATUS_DECLINE ? $now : null,

@@ -72,6 +72,13 @@ class SeminarPraProposal extends Model
         'approval_by'
     ];
 
+    public function getTanggalSeminarPraProposalAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['tanggal_seminar_pra_proposal'])
+            ->isoFormat('dddd, D MMMM Y HH:mm');
+    }
+
+
     public function scopeDataMahasiswa()
     {
         $auth = auth()->user()->id;
