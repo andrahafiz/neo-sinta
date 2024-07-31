@@ -42,8 +42,8 @@ class SeminarPraProposalResource extends JsonResource
             'declined_at' => $this->declined_at?->format('c'),
             'draf_pra_pro' => $this->draf_pra_pro ? url('/') . '/storage/' . $this->draf_pra_pro : null,
             'pra_pro_ppt'  => $this->pra_pro_ppt ? url('/') . '/storage/' . $this->pra_pro_ppt : null,
-            'ok_persetujuan_pra_pro'  => $this->dok_persetujuan_pra_pro ? url('/') . '/storage/' . $this->dok_persetujuan_pra_pro : null,
-
+            'dok_persetujuan_pra_pro'  => $this->dok_persetujuan_pra_pro ? url('/') . '/storage/' . $this->dok_persetujuan_pra_pro : null,
+            'tanggal_seminar_pra_proposal' => $this->whenNotNull($this->tanggal_seminar_pra_proposal),
             'mahasiswa'   => $mahasiswa,
             'approval_by'  => $approvalBy,
             'note'        => $this->note,

@@ -48,6 +48,7 @@ class SeminarProposal extends Model
     protected $casts = [
         'status' => 'string',
         'date' => 'datetime',
+        'tanggal_seminar_proposal' => 'datetime',
         'pic' => 'int',
         'mahasiswas_id' => 'int',
         'approval_by' => 'int',
@@ -74,7 +75,11 @@ class SeminarProposal extends Model
         'approved_at',
         'declined_at'
     ];
-
+    public function getTanggalSeminarProposalAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['tanggal_seminar_proposal'])
+            ->isoFormat('dddd, D MMMM Y HH:mm');
+    }
     public function scopeDataMahasiswa()
     {
         $auth = auth()->user()->id;

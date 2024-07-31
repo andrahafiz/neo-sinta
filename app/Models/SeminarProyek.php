@@ -46,6 +46,7 @@ class SeminarProyek extends Model
     protected $casts = [
         'status' => 'string',
         'date' => 'datetime',
+        'tanggal_seminar_proyek' => 'datetime',
         'pic' => 'int',
         'mahasiswas_id' => 'int',
         'proposed_at' => 'datetime',
@@ -67,6 +68,11 @@ class SeminarProyek extends Model
         'approved_at',
         'declined_at'
     ];
+    public function getTanggalSeminarProyekAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['tanggal_seminar_proyek'])
+            ->isoFormat('dddd, D MMMM Y HH:mm');
+    }
 
     public function mahasiswa()
     {

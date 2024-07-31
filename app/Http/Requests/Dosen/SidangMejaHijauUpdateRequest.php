@@ -31,6 +31,7 @@ class  SidangMejaHijauUpdateRequest extends FormRequest
         return [
             'status'    => ['sometimes', 'nullable', 'in:' . implode(',', $status)],
             'note'      => ['required_if:status,' . SidangMejaHIjau::STATUS_DECLINE, 'string'],
+        'tanggal_sidang_meja_hijau'      => ['required_if:status,' . SidangMejaHijau::STATUS_APPROVE, 'date_format:Y-m-d H:i'],
         ];
     }
 

@@ -32,6 +32,7 @@ class  SeminarHasilUpdateRequest extends FormRequest
         return [
             'status'    => ['sometimes', 'nullable', 'in:' . implode(',', $status)],
             'note'      => ['required_if:status,' . SeminarHasil::STATUS_DECLINE, 'string'],
+        'tanggal_seminar_hasil'      => ['required_if:status,' . SeminarHasil::STATUS_APPROVE, 'date_format:Y-m-d H:i'],
         ];
     }
 

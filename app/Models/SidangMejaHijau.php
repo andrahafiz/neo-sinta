@@ -44,6 +44,7 @@ class SidangMejaHijau extends Model
 
     protected $casts = [
         'status' => 'string',
+        'tanggal_sidang_meja_hijau' => 'datetime',
         'pic' => 'int',
         'mahasiswas_id' => 'int',
         'approval_by' => 'int',
@@ -68,7 +69,11 @@ class SidangMejaHijau extends Model
         'approved_at',
         'declined_at'
     ];
-
+    public function getTanggalSidangMejaHijauAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['tanggal_sidang_meja_hijau'])
+            ->isoFormat('dddd, D MMMM Y HH:mm');
+    }
     public function scopeDataMahasiswa()
     {
         $auth = auth()->user()->id;
