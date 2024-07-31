@@ -67,5 +67,20 @@ class Handler extends ExceptionHandler
             if ($request->wantsJson())
                 return Response::abortUnauthorized($e);
         });
+
+        $this->renderable(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
+            return Response::abortForbidden($e);
+            // return response()->json([
+            //     'responseMessage' => 'You do not have the required authorization.',
+            //     'responseStatus'  => 403,
+            // ]);
+        });
+
+        // if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+        //     return response()->json([
+        //         'responseMessage' => 'You do not have the required authorization.',
+        //         'responseStatus'  => 403,
+        //     ]);
+        // }
     }
 }

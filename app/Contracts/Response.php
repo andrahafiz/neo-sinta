@@ -98,10 +98,10 @@ abstract class Response
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function abortForbidden(): JsonResponse
+    public static function abortForbidden($e): JsonResponse
     {
         return self::json(
-            null,
+            ['message' => $e->getMessage()],
             self::MESSAGE_FORBIDDEN,
             self::STATUS_FORBIDDEN
         );
